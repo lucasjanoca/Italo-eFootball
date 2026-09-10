@@ -1,0 +1,1 @@
+window.ITALO_SITE_CONFIG=Object.freeze({"lockVideoSelection":true,"lockViewCounts":true,"videoSlots":8,"courseUrl":"https://linktr.ee/italoefootbal"});
