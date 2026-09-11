@@ -1,0 +1,76 @@
+/* Camada final: artes geradas e encaixes visuais. Carregada dinamicamente depois das demais folhas. */
+
+/* HOME — identidade e arte do curso/comunidade */
+body.home-redesign .r-brand-title{
+  width:min(430px,82vw)!important;
+  height:128px!important;
+  margin:0 auto 18px!important;
+  background:url('assets/generated/logo-esportivo-italo-football.webp') center/contain no-repeat!important;
+  font-size:0!important;
+  line-height:0!important;
+  filter:drop-shadow(0 10px 26px rgba(255,18,45,.25));
+}
+body.home-redesign .r-brand-title span,
+body.home-redesign .r-brand-title strong{display:none!important}
+
+body.home-redesign .r-course-reference .r-course-media{
+  background:#08090b url('assets/generated/curso-domine-o-jogo.webp') center/cover no-repeat!important;
+}
+body.home-redesign .r-course-reference .r-course-media img{opacity:0!important}
+
+body.home-redesign .r-community-visual{
+  background:#08090b url('assets/generated/comunidade-home.webp') 68% center/cover no-repeat!important;
+}
+body.home-redesign .r-community-visual:after{content:""!important;inset:0!important;right:auto!important;bottom:auto!important;background:linear-gradient(180deg,rgba(3,4,5,.05),rgba(3,4,5,.26) 62%,rgba(3,4,5,.68))!important}
+body.home-redesign .r-community-icons{display:none!important}
+
+/* COMUNIDADE — hero com a arte nova, mantendo texto e CTA reais por cima */
+body.community-redesign .c-top{
+  background:
+    linear-gradient(90deg,rgba(5,6,8,.98) 0 43%,rgba(5,6,8,.48) 69%,rgba(5,6,8,.76)),
+    url('assets/generated/comunidade-hero.webp') 66% center/cover no-repeat!important;
+}
+body.community-redesign .c-top:before{opacity:.42}
+
+/* Cards gerados: 4 colunas x 2 linhas no sprite. O texto HTML segue no DOM para acessibilidade. */
+body.community-redesign .c-shell>.c-section:nth-of-type(2) .c-topic,
+body.community-redesign .c-resenha .c-topic{
+  aspect-ratio:3/2!important;
+  min-height:0!important;
+  padding:0!important;
+  background-image:url('assets/generated/community-cards-sprite.webp')!important;
+  background-size:400% 200%!important;
+  background-repeat:no-repeat!important;
+  border-color:rgba(255,42,65,.72)!important;
+  box-shadow:0 0 0 1px rgba(255,25,49,.14),0 8px 24px rgba(0,0,0,.32),0 0 18px rgba(255,19,44,.08)!important;
+}
+body.community-redesign .c-shell>.c-section:nth-of-type(2) .c-topic:before,
+body.community-redesign .c-resenha .c-topic:before{display:none!important}
+body.community-redesign .c-shell>.c-section:nth-of-type(2) .c-topic>*,
+body.community-redesign .c-resenha .c-topic>*{opacity:0!important}
+
+body.community-redesign .c-shell>.c-section:nth-of-type(2) .c-topic:nth-child(1){background-position:0% 0%!important}
+body.community-redesign .c-shell>.c-section:nth-of-type(2) .c-topic:nth-child(2){background-position:33.333% 0%!important}
+body.community-redesign .c-shell>.c-section:nth-of-type(2) .c-topic:nth-child(3){background-position:66.666% 0%!important}
+body.community-redesign .c-shell>.c-section:nth-of-type(2) .c-topic:nth-child(4){background-position:100% 0%!important}
+body.community-redesign .c-resenha .c-topic:nth-child(1){background-position:0% 100%!important}
+body.community-redesign .c-resenha .c-topic:nth-child(2){background-position:33.333% 100%!important}
+body.community-redesign .c-resenha .c-topic:nth-child(3){background-position:66.666% 100%!important}
+body.community-redesign .c-resenha .c-topic:nth-child(4){background-position:100% 100%!important}
+
+body.community-redesign .c-section{margin-top:14px!important}
+body.community-redesign .c-section-head{padding-bottom:9px!important}
+body.community-redesign .c-card-grid{gap:9px!important;padding:0 12px 12px!important}
+
+@media(max-width:760px){
+  body.home-redesign .r-brand-title{height:94px!important;width:min(340px,86vw)!important;margin-bottom:12px!important}
+  body.home-redesign .r-community-visual{min-height:245px!important;background-position:69% center!important}
+  body.community-redesign .c-top{background-position:68% center!important}
+  body.community-redesign .c-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important;padding:0 9px 10px!important}
+}
+
+@media(max-width:430px){
+  body.home-redesign .r-brand-title{height:80px!important;width:min(300px,88vw)!important}
+  body.community-redesign .c-shell>.c-section:nth-of-type(2) .c-topic,
+  body.community-redesign .c-resenha .c-topic{border-radius:10px!important}
+}
