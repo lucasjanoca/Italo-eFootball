@@ -1,0 +1,49 @@
+/* Camada final de fidelidade visual à referência enviada. */
+.r-video-slide{aspect-ratio:.86/1}
+
+@media(max-width:760px){
+  .r-video-viewport{margin-inline:0;padding:10px 0 18px}
+  .r-video-track{gap:8px}
+  .r-video-slide{flex:0 0 calc((100% - 16px)/3);aspect-ratio:.78/1}
+  .r-video-slide .r-video-play{width:38px;height:31px;border-radius:8px;font-size:15px}
+  .r-video-slide .r-video-copy{left:7px;right:6px;bottom:7px;gap:3px}
+  .r-video-slide .r-video-copy strong{max-width:78%;font-size:10px;line-height:1.05}
+  .r-video-slide .r-video-copy small{font-size:7px;padding:2px 3px;border-radius:3px}
+  .r-video-slide.is-active{transform:translateY(-3px);box-shadow:0 0 0 1px rgba(255,30,54,.4),0 0 22px rgba(255,20,48,.5)}
+  .r-video-dots{gap:10px;margin:0 0 16px}
+  .r-video-dot{width:8px;height:8px}
+
+  .r-course-layout.r-course-reference{grid-template-columns:minmax(0,1fr) 29%;gap:8px;align-items:stretch}
+  .r-course-reference .r-course-main{grid-template-columns:43% 57%;min-height:205px;border-radius:11px}
+  .r-course-reference .r-course-media{min-height:205px}
+  .r-course-reference .r-course-copy{padding:14px 11px}
+  .r-course-reference .r-course-copy .mini{font-size:7.5px;letter-spacing:.08em}
+  .r-course-reference .r-course-copy h3{font-size:20px;margin:6px 0 4px}
+  .r-course-reference .r-course-copy p{font-size:9.5px;line-height:1.25;margin-bottom:9px}
+  .r-course-reference .r-course-btn{min-height:42px;font-size:11px;border-radius:8px}
+  .r-course-reference .r-course-side{display:grid;grid-template-columns:1fr;grid-template-rows:1fr 1fr;gap:8px}
+  .r-course-reference .r-mini-benefit{min-height:0;padding:10px 8px;display:block;border-radius:10px}
+  .r-course-reference .r-mini-benefit b{width:31px;height:31px;margin:0 0 6px;font-size:15px;border-radius:7px}
+  .r-course-reference .r-mini-benefit strong{font-size:9.5px;line-height:1.05;margin-bottom:4px}
+  .r-course-reference .r-mini-benefit span{font-size:7.7px;line-height:1.18}
+}
+
+@media(max-width:420px){
+  body.home-redesign .r-home-shell{width:calc(100% - 18px)}
+  body.home-redesign .r-home-section h2{font-size:34px}
+  body.home-redesign .r-section-intro{font-size:12.5px}
+  .r-video-track{gap:6px}
+  .r-video-slide{flex-basis:calc((100% - 12px)/3)}
+  .r-video-slide .r-video-copy strong{font-size:8.5px}
+  .r-video-slide .r-video-copy small{font-size:6px}
+  .r-course-layout.r-course-reference{grid-template-columns:minmax(0,1fr) 30%;gap:6px}
+  .r-course-reference .r-course-main{min-height:188px}
+  .r-course-reference .r-course-media{min-height:188px}
+  .r-course-reference .r-course-copy{padding:10px 8px}
+  .r-course-reference .r-course-copy h3{font-size:17px}
+  .r-course-reference .r-course-copy p{font-size:8.2px}
+  .r-course-reference .r-course-btn{min-height:38px;font-size:10px}
+  .r-course-reference .r-mini-benefit{padding:8px 6px}
+  .r-course-reference .r-mini-benefit strong{font-size:8.5px}
+  .r-course-reference .r-mini-benefit span{font-size:7px}
+}
