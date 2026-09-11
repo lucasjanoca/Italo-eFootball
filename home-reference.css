@@ -1,0 +1,92 @@
+/* HOME — fidelidade ao layout de referência enviado */
+body.home-redesign{background:#030405}
+body.home-redesign .r-home{background:#030405}
+body.home-redesign .r-home-section{padding:46px 0;background:radial-gradient(circle at 90% 4%,rgba(255,15,42,.14),transparent 26%),linear-gradient(180deg,#050607,#07080a);border-top:1px solid rgba(255,255,255,.045)}
+body.home-redesign .r-home-section:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.52;background:linear-gradient(165deg,transparent 0 18%,rgba(255,16,44,.26) 18.15% 18.35%,transparent 18.5% 63%,rgba(255,16,44,.14) 63.1% 63.25%,transparent 63.4%)}
+body.home-redesign .r-home-shell{position:relative;z-index:1;width:min(1080px,calc(100% - 30px))}
+body.home-redesign .r-section-kicker{font-size:11px;letter-spacing:.21em;margin-bottom:7px;color:#ff4055}
+body.home-redesign .r-section-kicker:before{width:31px;height:3px}
+body.home-redesign .r-home-section h2{font-size:clamp(38px,5.1vw,62px);font-weight:1000;letter-spacing:-.055em}
+body.home-redesign .r-section-intro{margin:10px 0 22px;max-width:730px;font-size:16px;line-height:1.35;color:#b0b4bc}
+
+/* CARROSSEL DE VÍDEOS */
+.r-video-carousel{position:relative;margin-top:2px}
+.r-video-viewport{overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:10px 3px 18px}
+.r-video-viewport::-webkit-scrollbar{display:none}
+.r-video-track{display:flex;gap:12px;align-items:stretch}
+.r-video-slide{position:relative;flex:0 0 calc((100% - 24px)/3);min-width:0;aspect-ratio:1.08/1;border-radius:12px;overflow:hidden;background:#090b0d;border:1px solid rgba(255,255,255,.24);scroll-snap-align:center;box-shadow:0 10px 30px rgba(0,0,0,.32);transition:transform .23s ease,border-color .23s ease,box-shadow .23s ease}
+.r-video-slide.is-active{border-color:#ff3851;box-shadow:0 0 0 2px rgba(255,30,54,.34),0 0 27px rgba(255,20,48,.42),0 14px 38px rgba(0,0,0,.4);transform:translateY(-4px)}
+.r-video-slide img{width:100%;height:100%;display:block;object-fit:cover;filter:saturate(.92) contrast(1.08)}
+.r-video-slide:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.03) 38%,rgba(2,3,4,.18) 54%,rgba(2,3,4,.98) 100%);pointer-events:none}
+.r-video-slide .r-video-play{z-index:3;top:51%;width:54px;height:43px;border-radius:11px;background:#f60023;font-size:21px;box-shadow:0 7px 20px rgba(255,0,36,.38)}
+.r-video-slide .r-video-copy{z-index:4;left:12px;right:10px;bottom:10px;display:flex;align-items:end;justify-content:space-between;gap:7px}
+.r-video-slide .r-video-copy strong{max-width:77%;font-size:17px;line-height:1.08;text-shadow:0 2px 8px #000}
+.r-video-slide .r-video-copy small{position:static;flex:0 0 auto;padding:4px 6px;border-radius:5px;border:1px solid rgba(255,255,255,.22);background:rgba(0,0,0,.74);font-size:10px}
+.r-video-dots{display:flex;align-items:center;justify-content:center;gap:11px;margin:2px 0 17px}
+.r-video-dot{width:9px;height:9px;padding:0;border:0;border-radius:50%;background:#625e61;box-shadow:none;cursor:pointer;transition:.2s}
+.r-video-dot.is-active{background:#ff1732;box-shadow:0 0 13px rgba(255,23,50,.75);transform:scale(1.16)}
+body.home-redesign .r-more-btn{width:min(670px,100%);min-height:52px;margin-top:0;border-radius:10px;border:1px solid #858a91;background:rgba(7,9,11,.86);font-size:15px;box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}
+body.home-redesign .r-more-btn:hover{border-color:#fff;background:#101216}
+
+/* CURSO — mesma composição da referência: arte + conteúdo + 2 benefícios */
+.r-course-layout.r-course-reference{grid-template-columns:minmax(0,1fr) 235px;gap:12px;margin-top:2px}
+.r-course-reference .r-course-main{grid-template-columns:42% 58%;min-height:275px;border-radius:13px;border:1px solid rgba(255,255,255,.32);background:linear-gradient(180deg,#0c0f12,#090a0d);box-shadow:0 16px 38px rgba(0,0,0,.32)}
+.r-course-reference .r-course-media{min-height:275px;background:#08090b;overflow:hidden}
+.r-course-reference .r-course-media img{width:100%;height:100%;object-fit:cover;display:block}
+.r-course-reference .r-course-copy{padding:25px 24px;justify-content:center}
+.r-course-reference .r-course-copy .mini{display:flex;align-items:center;gap:8px;color:#ff344c;font-size:10px;letter-spacing:.16em;font-weight:1000}
+.r-course-reference .r-course-copy h3{font-size:31px;margin:8px 0 6px;line-height:.98}
+.r-course-reference .r-course-copy p{font-size:14px;line-height:1.36;margin-bottom:17px;color:#b5b9c0}
+.r-course-reference .r-course-btn{min-height:54px;border-radius:10px;font-size:15px;background:linear-gradient(180deg,#ff1732,#dd0925);border:1px solid rgba(255,255,255,.19);box-shadow:0 0 20px rgba(255,20,45,.25)}
+.r-course-reference .r-course-side{gap:12px}
+.r-course-reference .r-mini-benefit{min-height:132px;padding:18px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.3);background:linear-gradient(180deg,#101318,#0b0d10);align-items:flex-start}
+.r-course-reference .r-mini-benefit b{width:45px;height:45px;flex:0 0 45px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(145deg,#201116,#101216);border:1px solid rgba(255,50,73,.22);color:#ff334b;font-size:23px}
+.r-course-reference .r-mini-benefit strong{font-size:14px;line-height:1.1;margin:2px 0 6px}
+.r-course-reference .r-mini-benefit span{display:block;font-size:11px;line-height:1.3;color:#9ea4ad}
+
+/* Aproxima o bloco da comunidade da referência, mantendo o link funcional */
+body.home-redesign .r-community-promo{border-radius:15px;border-color:#ff2440;box-shadow:0 0 0 1px rgba(255,20,46,.28),0 0 26px rgba(255,20,46,.2);background:radial-gradient(circle at 80% 25%,rgba(255,24,50,.24),transparent 30%),linear-gradient(125deg,#080a0d,#030405)}
+body.home-redesign .r-community-copy{padding:32px 28px}
+body.home-redesign .r-community-copy h2{font-size:clamp(37px,5vw,58px)}
+body.home-redesign .r-community-visual{min-height:325px}
+
+@media(max-width:760px){
+  body.home-redesign .r-home-section{padding:38px 0}
+  body.home-redesign .r-home-shell{width:min(100% - 24px,680px)}
+  body.home-redesign .r-home-section h2{font-size:37px}
+  body.home-redesign .r-section-intro{font-size:14px;margin-bottom:18px}
+  .r-video-viewport{margin-inline:-12px;padding-inline:12px}
+  .r-video-track{gap:9px}
+  .r-video-slide{flex-basis:78%;aspect-ratio:1.04/1}
+  .r-video-slide .r-video-copy strong{font-size:16px}
+  .r-video-slide.is-active{transform:none}
+  .r-video-dots{margin-top:0}
+  .r-course-layout.r-course-reference{grid-template-columns:1fr;gap:10px}
+  .r-course-reference .r-course-main{grid-template-columns:43% 57%;min-height:230px}
+  .r-course-reference .r-course-media{min-height:230px}
+  .r-course-reference .r-course-copy{padding:18px 15px}
+  .r-course-reference .r-course-copy h3{font-size:23px}
+  .r-course-reference .r-course-copy p{font-size:12px;margin-bottom:13px}
+  .r-course-reference .r-course-btn{min-height:48px;font-size:13px}
+  .r-course-reference .r-course-side{grid-template-columns:1fr 1fr}
+  .r-course-reference .r-mini-benefit{min-height:116px;padding:14px 12px;gap:9px}
+  .r-course-reference .r-mini-benefit b{width:38px;height:38px;flex-basis:38px;font-size:19px}
+  .r-course-reference .r-mini-benefit strong{font-size:12px}
+  .r-course-reference .r-mini-benefit span{font-size:10px}
+}
+
+@media(max-width:480px){
+  .r-video-slide{flex-basis:82%}
+  .r-course-reference .r-course-main{grid-template-columns:42% 58%;min-height:215px}
+  .r-course-reference .r-course-media{min-height:215px}
+  .r-course-reference .r-course-copy{padding:14px 12px}
+  .r-course-reference .r-course-copy .mini{font-size:8px;letter-spacing:.1em}
+  .r-course-reference .r-course-copy h3{font-size:20px}
+  .r-course-reference .r-course-copy p{font-size:10.5px;line-height:1.3;margin-bottom:10px}
+  .r-course-reference .r-course-btn{min-height:43px;font-size:12px}
+  .r-course-reference .r-course-side{gap:8px}
+  .r-course-reference .r-mini-benefit{padding:11px 9px;min-height:104px;display:block}
+  .r-course-reference .r-mini-benefit b{margin-bottom:7px;width:34px;height:34px;font-size:17px}
+  .r-course-reference .r-mini-benefit strong{font-size:11px}
+  .r-course-reference .r-mini-benefit span{font-size:9px}
+}
