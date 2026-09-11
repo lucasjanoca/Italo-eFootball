@@ -129,21 +129,35 @@ document.querySelectorAll('a').forEach(link => {
   }
 });
 
-/* Assinatura InfoTech.io: centralizada, azul e com a logo oficial da marca. */
+/* Assinatura InfoTech.io: logo e texto no mesmo eixo visual em todas as páginas. */
 const infoTechLogoUrl = 'https://raw.githubusercontent.com/lucasjanoca/InfoTech.io/main/assets/brand/logo.webp';
 
 document.querySelectorAll('.site-footer .credit').forEach(credit => {
+  let text = credit.querySelector('.credit-text');
+
+  if (!text) {
+    text = document.createElement('span');
+    text.className = 'credit-text';
+
+    const nodes = Array.from(credit.childNodes).filter(node => {
+      return !(node.nodeType === 1 && node.classList?.contains('credit-logo'));
+    });
+
+    nodes.forEach(node => text.appendChild(node));
+    credit.appendChild(text);
+  }
+
   if (!credit.querySelector('.credit-logo')) {
     const logo = document.createElement('img');
     logo.className = 'credit-logo';
     logo.src = infoTechLogoUrl;
     logo.alt = 'InfoTech.io';
-    logo.width = 24;
-    logo.height = 24;
+    logo.width = 28;
+    logo.height = 28;
     logo.loading = 'lazy';
     logo.decoding = 'async';
     logo.addEventListener('error', () => logo.remove(), { once: true });
-    credit.prepend(logo);
+    credit.insertBefore(logo, text);
   }
 });
 
@@ -152,22 +166,29 @@ if (!document.querySelector('#infotech-credit-style')) {
   style.id = 'infotech-credit-style';
   style.textContent = `
     .site-footer .credit{
-      width:max-content;max-width:100%;margin:0 auto;padding:9px 15px;
-      display:inline-flex;align-items:center;justify-content:center;gap:9px;justify-self:center;
-      border:1px solid rgba(67,162,255,.48);border-radius:999px;
-      background:linear-gradient(135deg,rgba(20,112,211,.24),rgba(7,35,72,.48));
-      box-shadow:0 8px 28px rgba(18,104,201,.16),inset 0 1px 0 rgba(255,255,255,.08);
-      color:#d4e6f8;font-size:12px;line-height:1.2;text-align:center;
+      width:max-content;max-width:100%;min-height:50px;margin:0 auto;padding:9px 17px;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;justify-self:center;
+      border:1px solid rgba(67,162,255,.5);border-radius:999px;
+      background:linear-gradient(135deg,rgba(20,112,211,.25),rgba(7,35,72,.5));
+      box-shadow:0 8px 28px rgba(18,104,201,.17),inset 0 1px 0 rgba(255,255,255,.09);
+      color:#d4e6f8;font-size:12px;text-align:center;
     }
     .site-footer .credit .credit-logo{
-      width:24px;height:24px;flex:0 0 24px;object-fit:contain;border-radius:7px;
-      filter:drop-shadow(0 0 8px rgba(72,170,255,.25));
+      width:28px;height:28px;flex:0 0 28px;display:block;object-fit:contain;object-position:center;
+      border-radius:8px;transform:translateY(1px);filter:drop-shadow(0 0 8px rgba(72,170,255,.28));
     }
-    .site-footer .credit a{color:#78c0ff;text-decoration:none}
-    .site-footer .credit a strong{color:#78c0ff;letter-spacing:.01em}
-    .site-footer .credit:hover{border-color:rgba(93,181,255,.75);box-shadow:0 10px 30px rgba(18,104,201,.24)}
+    .site-footer .credit .credit-text{
+      display:inline-flex;align-items:center;justify-content:center;gap:4px;line-height:1;white-space:nowrap;
+    }
+    .site-footer .credit a{color:#78c0ff;text-decoration:none;display:inline-flex;align-items:center;line-height:1}
+    .site-footer .credit a strong{color:#78c0ff;letter-spacing:.01em;line-height:1}
+    .site-footer .credit:hover{border-color:rgba(93,181,255,.78);box-shadow:0 10px 30px rgba(18,104,201,.25)}
     @media (max-width:900px){
       .site-footer .credit{grid-column:1/-1;justify-self:center!important;margin-inline:auto!important}
+    }
+    @media (max-width:390px){
+      .site-footer .credit{padding-inline:13px;gap:8px;font-size:11px}
+      .site-footer .credit .credit-logo{width:26px;height:26px;flex-basis:26px}
     }
   `;
   document.head.appendChild(style);
