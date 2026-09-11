@@ -1,4 +1,13 @@
 (() => {
+  /* Carrega por último a camada das artes geradas da comunidade. */
+  if (!document.querySelector('link[data-generated-assets]')) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'generated-assets.css';
+    link.dataset.generatedAssets = 'true';
+    document.head.appendChild(link);
+  }
+
   const authWrap = document.querySelector('[data-auth-wrap]');
   if (!authWrap) return;
 
