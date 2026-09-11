@@ -1,1 +1,1 @@
-window.ITALO_SITE_CONFIG=Object.freeze({"lockVideoSelection":true,"lockViewCounts":true,"videoSlots":8,"courseUrl":"https://pay.kiwify.com.br/yAdCPJy","youtubeChannelUrl":"https://www.youtube.com/channel/UC972onsIyHgDN0VC2u4W3zA"});
+window.ITALO_SITE_CONFIG=Object.freeze({"lockVideoSelection":true,"lockViewCounts":true,"videoSlots":8,"courseUrl":"https://pay.kiwify.com.br/yAdCPJy","youtubeChannelUrl":"https://youtube.com/@italoefootballives?si=0cd7d6id502UjSVx"});
