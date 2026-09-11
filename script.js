@@ -52,25 +52,63 @@ document.querySelectorAll('[data-course-link]').forEach(link => {
   if (url) link.href = url;
 });
 
-const youtubeChannelUrl = window.ITALO_SITE_CONFIG?.youtubeChannelUrl || 'https://www.youtube.com/channel/UC972onsIyHgDN0VC2u4W3zA';
-const oldYoutubeChannelId = 'UCaThC5oHN4mG59Ya8WGQLmQ';
+const youtubeChannelUrl = window.ITALO_SITE_CONFIG?.youtubeChannelUrl || 'https://youtube.com/@italoefootballives?si=0cd7d6id502UjSVx';
+
+function isYoutubeVideoUrl(rawHref) {
+  try {
+    const url = new URL(rawHref, window.location.href);
+    const host = url.hostname.replace(/^www\./, '').toLowerCase();
+
+    if (host === 'youtu.be') return true;
+    if (host !== 'youtube.com' && host !== 'm.youtube.com') return false;
+
+    return url.pathname === '/watch' ||
+      url.searchParams.has('v') ||
+      /^\/(shorts|live|embed)\//i.test(url.pathname);
+  } catch {
+    return false;
+  }
+}
+
+function isYoutubeChannelUrl(rawHref) {
+  try {
+    const url = new URL(rawHref, window.location.href);
+    const host = url.hostname.replace(/^www\./, '').toLowerCase();
+    if (host !== 'youtube.com' && host !== 'm.youtube.com') return false;
+    return !isYoutubeVideoUrl(rawHref);
+  } catch {
+    return false;
+  }
+}
 
 document.querySelectorAll('a').forEach(link => {
   const label = (link.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+
   if (label.includes('entrar na comunidade')) {
     link.href = 'grupos.html';
     link.removeAttribute('target');
     link.removeAttribute('rel');
   }
 
-  const href = link.getAttribute('href') || '';
-  const isOldChannelLink = href.includes(`youtube.com/channel/${oldYoutubeChannelId}`);
-  const isHandleChannelLink = href.includes('youtube.com/@italoefootball');
+  const rawHref = link.getAttribute('href') || '';
 
-  if (isOldChannelLink || isHandleChannelLink) {
+  if (isYoutubeChannelUrl(rawHref)) {
     link.href = youtubeChannelUrl;
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
+  }
+});
+
+/* Garante segurança e comportamento consistente para todos os links externos. */
+document.querySelectorAll('a[href]').forEach(link => {
+  try {
+    const url = new URL(link.getAttribute('href'), window.location.href);
+    if ((url.protocol === 'http:' || url.protocol === 'https:') && url.origin !== window.location.origin) {
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+    }
+  } catch {
+    /* Links relativos válidos não precisam de tratamento adicional. */
   }
 });
 
