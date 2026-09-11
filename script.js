@@ -52,7 +52,7 @@ document.querySelectorAll('[data-course-link]').forEach(link => {
   if (url) link.href = url;
 });
 
-const youtubeChannelUrl = 'https://www.youtube.com/channel/UC972onsIyHgDN0VC2u4W3zA';
+const youtubeChannelUrl = window.ITALO_SITE_CONFIG?.youtubeChannelUrl || 'https://www.youtube.com/channel/UC972onsIyHgDN0VC2u4W3zA';
 const oldYoutubeChannelId = 'UCaThC5oHN4mG59Ya8WGQLmQ';
 
 document.querySelectorAll('a').forEach(link => {
