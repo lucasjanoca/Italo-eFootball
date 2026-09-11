@@ -47,9 +47,39 @@ window.addEventListener('resize', () => {
   if (window.innerWidth > 760) setMenu(false);
 }, { passive: true });
 
-document.querySelectorAll('[data-course-link]').forEach(link => {
-  const url = window.ITALO_SITE_CONFIG?.courseUrl;
-  if (url) link.href = url;
+/* Catálogo de cursos: o site apresenta os cursos antes de enviar ao checkout. */
+const courseCheckoutUrl = window.ITALO_SITE_CONFIG?.courseUrl || 'https://pay.kiwify.com.br/yAdCPJy';
+
+document.querySelectorAll('[data-course-checkout]').forEach(link => {
+  link.href = courseCheckoutUrl;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+});
+
+document.querySelectorAll('.desktop-nav a[href="curso.html"], .mobile-menu a[href="curso.html"]').forEach(link => {
+  link.textContent = 'Cursos';
+});
+
+document.querySelectorAll('a[href]').forEach(link => {
+  if (link.hasAttribute('data-course-checkout')) return;
+
+  const rawHref = link.getAttribute('href') || '';
+  try {
+    const url = new URL(rawHref, window.location.href);
+    const host = url.hostname.replace(/^www\./, '').toLowerCase();
+    if (host === 'pay.kiwify.com.br') {
+      link.href = 'curso.html';
+      link.removeAttribute('target');
+      link.removeAttribute('rel');
+
+      const label = (link.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (link.classList.contains('btn') && label.includes('curso')) {
+        link.innerHTML = 'Ver cursos <span>›</span>';
+      }
+    }
+  } catch {
+    /* Ignora URLs inválidas sem interromper a navegação. */
+  }
 });
 
 const youtubeChannelUrl = window.ITALO_SITE_CONFIG?.youtubeChannelUrl || 'https://youtube.com/@italoefootballives?si=0cd7d6id502UjSVx';
@@ -98,6 +128,30 @@ document.querySelectorAll('a').forEach(link => {
     link.rel = 'noopener noreferrer';
   }
 });
+
+/* Destaque visual da assinatura InfoTech.io em todas as páginas. */
+if (!document.querySelector('#infotech-credit-style')) {
+  const style = document.createElement('style');
+  style.id = 'infotech-credit-style';
+  style.textContent = `
+    .site-footer .credit{
+      width:max-content;max-width:100%;margin:0;padding:10px 14px 10px 36px;position:relative;
+      border:1px solid rgba(67,162,255,.42);border-radius:999px;
+      background:linear-gradient(135deg,rgba(20,112,211,.22),rgba(7,35,72,.42));
+      box-shadow:0 8px 28px rgba(18,104,201,.14),inset 0 1px 0 rgba(255,255,255,.07);
+      color:#c8d9eb;font-size:12px;line-height:1.2;
+    }
+    .site-footer .credit:before{
+      content:'✦';position:absolute;left:14px;top:50%;transform:translateY(-50%);
+      color:#55adff;text-shadow:0 0 14px rgba(72,170,255,.7);font-size:13px;
+    }
+    .site-footer .credit a{color:#71bbff;text-decoration:none}
+    .site-footer .credit a strong{color:#71bbff;letter-spacing:.01em}
+    .site-footer .credit:hover{border-color:rgba(93,181,255,.72);box-shadow:0 10px 30px rgba(18,104,201,.22)}
+    @media (max-width:900px){.site-footer .credit{justify-self:start}}
+  `;
+  document.head.appendChild(style);
+}
 
 /* Garante segurança e comportamento consistente para todos os links externos. */
 document.querySelectorAll('a[href]').forEach(link => {
