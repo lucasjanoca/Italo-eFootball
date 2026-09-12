@@ -1,6 +1,6 @@
 window.ITALO_SITE_CONFIG=Object.freeze({
   auditVersion:"2026-09-12-launch",
-  assetVersion:"20260912-launch4",
+  assetVersion:"20260912-launch5",
   lockVideoSelection:true,
   lockViewCounts:true,
   videoSlots:8,
@@ -16,10 +16,15 @@ window.ITALO_SITE_CONFIG=Object.freeze({
     if(document.querySelector(`link[${marker}]`))return;
     const css=document.createElement('link');css.rel='stylesheet';css.href=`${href}?v=${encodeURIComponent(version)}`;css.setAttribute(marker,'true');document.head.appendChild(css);
   };
+  const addScript=(src,marker)=>{
+    if(document.querySelector(`script[${marker}]`))return;
+    const js=document.createElement('script');js.src=`${src}?v=${encodeURIComponent(version)}`;js.defer=true;js.setAttribute(marker,'true');document.head.appendChild(js);
+  };
   addStylesheet('generated-assets.css','data-generated-assets');
   addStylesheet('production-fixes.css','data-production-fixes');
   addStylesheet('carousel-enhancements.css','data-carousel-enhancements');
   addStylesheet('launch.css','data-launch-css');
+  addScript('launch-social.js','data-launch-social');
   if(/\/grupos\.html(?:$|[?#])/i.test(location.pathname+location.search+location.hash)){location.replace('comunidade.html');return;}
   const normalize=()=>document.querySelectorAll('a[href]').forEach(link=>{
     const href=(link.getAttribute('href')||'').trim().toLowerCase();
