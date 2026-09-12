@@ -1,18 +1,10 @@
 (() => {
-  /* Carrega por último a camada das artes geradas da comunidade. */
-  if (!document.querySelector('link[data-generated-assets]')) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'generated-assets.css';
-    link.dataset.generatedAssets = 'true';
-    document.head.appendChild(link);
-  }
-
   const authWrap = document.querySelector('[data-auth-wrap]');
   if (!authWrap) return;
 
   const SUPABASE_URL = 'https://yncspxfsvlqdnodlsosb.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_jALAHHuvrV5oxj2mugWTCQ_stD_vFyN';
+
   const client = window.supabase?.createClient(SUPABASE_URL, SUPABASE_KEY, {
     auth: {
       persistSession: true,
@@ -25,55 +17,65 @@
   const modal = authWrap;
   const googleBtn = document.querySelector('[data-google-login]');
   const closeBtn = document.querySelector('[data-auth-close]');
-  const msg = document.querySelector('[data-auth-msg]');
+  const authMsg = document.querySelector('[data-auth-msg]');
   const userChip = document.querySelector('[data-user-chip]');
   const userAvatar = document.querySelector('[data-user-avatar]');
   const userName = document.querySelector('[data-user-name]');
   const logoutBtn = document.querySelector('[data-user-logout]');
   const locked = document.querySelectorAll('.c-locked');
   const toast = document.querySelector('[data-community-toast]');
+  const statusCopy = document.querySelector('[data-community-status] span');
 
   const messagesEl = document.querySelector('.c-messages');
   const chatInput = document.querySelector('.c-input input[type="text"]');
-  const chatSend = document.querySelector('.c-input button[data-requires-auth]');
-  const createTopicBtn = [...document.querySelectorAll('button[data-requires-auth]')]
-    .find(button => /criar\s+t[oó]pico/i.test(button.textContent || ''));
-  const topicSection = createTopicBtn?.closest('.c-section');
-  const topicGrid = topicSection?.querySelector('.c-card-grid');
+  const chatSend = document.querySelector('[data-chat-send]');
+  const emojiBtn = document.querySelector('[data-chat-emoji]');
+  const createTopicBtn = document.querySelector('[data-create-topic]');
+  const topicGrid = document.querySelector('[data-topic-grid]');
 
   let session = null;
   let realtimeChannel = null;
   let topicState = new Map();
+  let loadingCommunity = false;
   const renderedMessageIds = new Set();
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function showToast(text) {
     if (!toast) return;
     toast.textContent = text;
     toast.classList.add('show');
-    clearTimeout(showToast.t);
-    showToast.t = setTimeout(() => toast.classList.remove('show'), 2800);
+    clearTimeout(showToast.timer);
+    showToast.timer = setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  function setAuthMessage(text = '') {
+    if (authMsg) authMsg.textContent = text;
   }
 
   function openAuth() {
     if (session) {
-      showToast('Você já está conectado à comunidade.');
+      document.querySelector('#chat')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
       return;
     }
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
+    requestAnimationFrame(() => googleBtn?.focus());
   }
 
   function closeAuth() {
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden', 'true');
+    setAuthMessage('');
   }
 
   function profileFromSession() {
     const user = session?.user;
     const meta = user?.user_metadata || {};
+    const rawName = meta.full_name || meta.name || user?.email?.split('@')[0] || 'Jogador';
     return {
       userId: user?.id || null,
-      name: (meta.full_name || meta.name || user?.email?.split('@')[0] || 'Jogador').trim().slice(0, 60),
+      name: String(rawName).trim().slice(0, 60) || 'Jogador',
       avatar: meta.avatar_url || meta.picture || 'assets/avatar.jpg'
     };
   }
@@ -87,15 +89,12 @@
       avatar_url: profile.avatar,
       updated_at: new Date().toISOString()
     }, { onConflict: 'user_id' });
-
-    if (error) console.error('Não foi possível sincronizar o perfil da comunidade:', error);
+    if (error) console.error('Falha ao sincronizar perfil:', error);
   }
 
-  function applySession(next) {
-    session = next;
-    const user = session?.user;
-    const signed = !!user;
-
+  function applySession(nextSession) {
+    session = nextSession || null;
+    const signed = !!session?.user;
     userChip?.classList.toggle('show', signed);
     locked.forEach(el => el.classList.toggle('unlocked', signed));
     document.body.classList.toggle('community-authenticated', signed);
@@ -107,16 +106,34 @@
         userAvatar.src = profile.avatar;
         userAvatar.onerror = () => { userAvatar.src = 'assets/avatar.jpg'; };
       }
+      if (statusCopy) statusCopy.textContent = `Conectado como ${profile.name}. Chat e tópicos carregam dados reais.`;
+    } else {
+      if (statusCopy) statusCopy.textContent = 'Entre para carregar os dados reais da comunidade.';
+      resetSignedOutView();
     }
+  }
+
+  function resetSignedOutView() {
+    stopRealtime();
+    renderEmptyChat('Entre com o Google para carregar as mensagens reais.');
+    if (topicGrid) {
+      topicGrid.replaceChildren();
+      const card = document.createElement('article');
+      card.className = 'c-topic';
+      const title = document.createElement('strong');
+      title.textContent = 'Entre para ver os tópicos';
+      const copy = document.createElement('small');
+      copy.textContent = 'Os participantes e tópicos são carregados do banco de dados.';
+      card.append(title, copy);
+      topicGrid.append(card);
+    }
+    topicState = new Map();
   }
 
   function formatMessageTime(value) {
     const date = new Date(value);
     if (Number.isNaN(date.getTime())) return '';
-    return new Intl.DateTimeFormat('pt-BR', {
-      hour: '2-digit',
-      minute: '2-digit'
-    }).format(date);
+    return new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' }).format(date);
   }
 
   function makeMessageElement(row) {
@@ -145,26 +162,7 @@
   }
 
   function scrollChatToBottom() {
-    if (!messagesEl) return;
-    messagesEl.scrollTop = messagesEl.scrollHeight;
-  }
-
-  function appendMessage(row) {
-    if (!messagesEl || !row?.id || renderedMessageIds.has(String(row.id))) return;
-    renderedMessageIds.add(String(row.id));
-
-    const empty = messagesEl.querySelector('[data-chat-empty]');
-    empty?.remove();
-
-    messagesEl.appendChild(makeMessageElement(row));
-
-    while (messagesEl.children.length > 80) {
-      const first = messagesEl.firstElementChild;
-      const id = first?.dataset.messageId;
-      if (id) renderedMessageIds.delete(id);
-      first?.remove();
-    }
-    scrollChatToBottom();
+    if (messagesEl) messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
   function renderEmptyChat(text) {
@@ -193,8 +191,25 @@
     messagesEl.appendChild(empty);
   }
 
+  function appendMessage(row) {
+    if (!messagesEl || row?.id == null) return;
+    const id = String(row.id);
+    if (renderedMessageIds.has(id)) return;
+    renderedMessageIds.add(id);
+    messagesEl.querySelector('[data-chat-empty]')?.remove();
+    messagesEl.appendChild(makeMessageElement(row));
+
+    while (messagesEl.children.length > 80) {
+      const first = messagesEl.firstElementChild;
+      if (first?.dataset.messageId) renderedMessageIds.delete(first.dataset.messageId);
+      first?.remove();
+    }
+    scrollChatToBottom();
+  }
+
   async function loadMessages() {
     if (!client || !session || !messagesEl) return;
+    renderEmptyChat('Carregando mensagens…');
 
     const { data, error } = await client
       .from('italo_messages')
@@ -203,21 +218,18 @@
       .limit(80);
 
     if (error) {
-      console.error('Falha ao carregar o chat:', error);
+      console.error('Falha ao carregar chat:', error);
       renderEmptyChat('Não foi possível carregar o chat agora. Tente novamente.');
       return;
     }
 
     messagesEl.replaceChildren();
     renderedMessageIds.clear();
-
     if (!data?.length) {
       renderEmptyChat('O chat está aberto. Seja o primeiro a mandar uma mensagem! ⚽');
       return;
     }
-
     [...data].reverse().forEach(appendMessage);
-    scrollChatToBottom();
   }
 
   async function sendMessage() {
@@ -225,7 +237,10 @@
       openAuth();
       return;
     }
-    if (!client || !chatInput) return;
+    if (!client || !chatInput) {
+      showToast('O chat não pôde ser carregado.');
+      return;
+    }
 
     const body = chatInput.value.trim();
     if (!body) {
@@ -255,7 +270,7 @@
 
     if (error) {
       console.error('Falha ao enviar mensagem:', error);
-      showToast('Não foi possível enviar. Tente de novo.');
+      showToast('Não foi possível enviar a mensagem. Tente novamente.');
       return;
     }
 
@@ -278,48 +293,44 @@
     if (!rows?.length) {
       const empty = document.createElement('article');
       empty.className = 'c-topic';
-      const strong = document.createElement('strong');
-      strong.textContent = 'Nenhum tópico aberto';
-      const small = document.createElement('small');
-      small.textContent = 'Crie o primeiro tópico da comunidade.';
-      empty.append(strong, small);
+      const title = document.createElement('strong');
+      title.textContent = 'Nenhum tópico aberto';
+      const copy = document.createElement('small');
+      copy.textContent = 'Crie o primeiro tópico da comunidade.';
+      empty.append(title, copy);
       topicGrid.appendChild(empty);
       return;
     }
 
     const currentUserId = session?.user?.id;
-    const byTopic = new Map();
-
+    const membersByTopic = new Map();
     (members || []).forEach(member => {
       const id = Number(member.topic_id);
-      if (!byTopic.has(id)) byTopic.set(id, []);
-      byTopic.get(id).push(member.user_id);
+      if (!membersByTopic.has(id)) membersByTopic.set(id, []);
+      membersByTopic.get(id).push(member.user_id);
     });
 
     rows.forEach(row => {
       const id = Number(row.id);
-      const memberIds = byTopic.get(id) || [];
+      const memberIds = membersByTopic.get(id) || [];
       const joined = !!currentUserId && memberIds.includes(currentUserId);
       topicState.set(id, { joined });
 
-      const card = document.createElement('a');
+      const card = document.createElement('button');
+      card.type = 'button';
       card.className = 'c-topic';
-      card.href = '#';
       card.dataset.topicId = String(id);
+      card.setAttribute('aria-pressed', String(joined));
 
-      const strong = document.createElement('strong');
-      strong.textContent = row.title;
+      const title = document.createElement('strong');
+      title.textContent = row.title;
 
-      const small = document.createElement('small');
-      small.className = 'live-dot';
-      small.textContent = topicParticipantsLabel(memberIds.length, joined);
+      const copy = document.createElement('small');
+      copy.className = 'live-dot';
+      copy.textContent = topicParticipantsLabel(memberIds.length, joined);
 
-      card.append(strong, small);
-      card.addEventListener('click', event => {
-        event.preventDefault();
-        toggleTopicMembership(id);
-      });
-
+      card.append(title, copy);
+      card.addEventListener('click', () => toggleTopicMembership(id));
       topicGrid.appendChild(card);
     });
   }
@@ -336,6 +347,7 @@
 
     if (topicError) {
       console.error('Falha ao carregar tópicos:', topicError);
+      showToast('Não foi possível carregar os tópicos.');
       return;
     }
 
@@ -366,7 +378,7 @@
     }
     if (!client) return;
 
-    const raw = window.prompt('Qual será o nome do tópico? Ex.: Amistoso agora');
+    const raw = window.prompt('Nome do tópico (ex.: Amistoso agora):');
     if (raw === null) return;
 
     const title = raw.trim().replace(/\s+/g, ' ');
@@ -405,10 +417,12 @@
       .insert({ topic_id: topic.id, user_id: profile.userId });
 
     if (createTopicBtn) createTopicBtn.disabled = false;
-
-    if (joinError) console.error('Tópico criado, mas a entrada automática falhou:', joinError);
-
-    showToast('Tópico criado! 🎮');
+    if (joinError) {
+      console.error('Entrada automática no tópico falhou:', joinError);
+      showToast('Tópico criado, mas não foi possível entrar automaticamente.');
+    } else {
+      showToast('Tópico criado! 🎮');
+    }
     await loadTopics();
   }
 
@@ -419,11 +433,12 @@
     }
     if (!client) return;
 
-    const joined = topicState.get(Number(topicId))?.joined;
+    const current = topicState.get(Number(topicId));
+    if (!current) return;
     const userId = session.user.id;
 
     let error;
-    if (joined) {
+    if (current.joined) {
       ({ error } = await client
         .from('italo_topic_members')
         .delete()
@@ -441,7 +456,7 @@
       return;
     }
 
-    showToast(joined ? 'Você saiu do tópico.' : 'Você entrou no tópico! ⚽');
+    showToast(current.joined ? 'Você saiu do tópico.' : 'Você entrou no tópico! ⚽');
     await loadTopics();
   }
 
@@ -453,7 +468,6 @@
 
   function startRealtime() {
     if (!client || !session || realtimeChannel) return;
-
     realtimeChannel = client
       .channel(`italo-community-${session.user.id}`)
       .on('postgres_changes', {
@@ -464,32 +478,32 @@
       .subscribe(status => {
         if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
           console.warn('Realtime indisponível:', status);
+          showToast('Atualização em tempo real temporariamente indisponível.');
         }
       });
   }
 
   async function loadCommunityData() {
-    if (!session) return;
-    await ensureProfile();
-    await Promise.all([loadMessages(), loadTopics()]);
-    startRealtime();
+    if (!session || loadingCommunity) return;
+    loadingCommunity = true;
+    try {
+      await ensureProfile();
+      await Promise.all([loadMessages(), loadTopics()]);
+      startRealtime();
+    } finally {
+      loadingCommunity = false;
+    }
   }
 
-  document.querySelectorAll('[data-community-enter]').forEach(btn => btn.addEventListener('click', event => {
-    event.preventDefault();
-    if (session) {
-      document.querySelector('#chat')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      showToast('Comunidade liberada.');
-    } else {
-      openAuth();
-    }
-  }));
-
-  chatSend?.addEventListener('click', event => {
-    event.preventDefault();
-    sendMessage();
+  document.querySelectorAll('[data-community-enter]').forEach(button => {
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      if (!session) openAuth();
+      else document.querySelector('#chat')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+    });
   });
 
+  chatSend?.addEventListener('click', sendMessage);
   chatInput?.addEventListener('keydown', event => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
@@ -497,76 +511,107 @@
     }
   });
 
-  createTopicBtn?.addEventListener('click', event => {
-    event.preventDefault();
-    createTopic();
+  emojiBtn?.addEventListener('click', () => {
+    if (!session) {
+      openAuth();
+      return;
+    }
+    if (!chatInput) return;
+    chatInput.value += ' ⚽';
+    chatInput.focus();
   });
 
-  document.querySelectorAll('[data-requires-auth]').forEach(btn => btn.addEventListener('click', event => {
-    if (btn === chatSend || btn === createTopicBtn) return;
-    event.preventDefault();
-    if (!session) openAuth();
-    else showToast('Essa área será a próxima a receber dados reais.');
-  }));
+  createTopicBtn?.addEventListener('click', createTopic);
+
+  document.querySelectorAll('[data-coming-soon]').forEach(button => {
+    button.addEventListener('click', () => showToast('Em breve. Esta área ainda não foi liberada.'));
+  });
 
   closeBtn?.addEventListener('click', closeAuth);
-  modal.addEventListener('click', event => { if (event.target === modal) closeAuth(); });
-  document.addEventListener('keydown', event => { if (event.key === 'Escape') closeAuth(); });
+  modal.addEventListener('click', event => {
+    if (event.target === modal) closeAuth();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && modal.classList.contains('open')) closeAuth();
+  });
 
   googleBtn?.addEventListener('click', async () => {
     if (!client) {
-      if (msg) msg.textContent = 'Login ainda não pôde ser carregado.';
+      setAuthMessage('O serviço de login não pôde ser carregado. Atualize a página e tente novamente.');
       return;
     }
 
-    if (msg) msg.textContent = 'Abrindo o Google...';
+    setAuthMessage('Abrindo o Google…');
     googleBtn.disabled = true;
 
     try {
       const { error } = await client.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: location.origin + location.pathname,
+          redirectTo: `${location.origin}${location.pathname}`,
           queryParams: { prompt: 'select_account' }
         }
       });
       if (error) throw error;
-    } catch (err) {
-      console.error('Falha ao abrir login Google:', err);
-      if (msg) msg.textContent = 'Não foi possível abrir o Google agora.';
+    } catch (error) {
+      console.error('Falha ao abrir login Google:', error);
+      setAuthMessage('Não foi possível abrir o Google. Tente novamente.');
       googleBtn.disabled = false;
     }
   });
 
   logoutBtn?.addEventListener('click', async () => {
-    stopRealtime();
-    if (client) await client.auth.signOut();
+    if (!client) return;
+    logoutBtn.disabled = true;
+    const { error } = await client.auth.signOut();
+    logoutBtn.disabled = false;
+    if (error) {
+      console.error('Falha ao sair:', error);
+      showToast('Não foi possível sair agora.');
+      return;
+    }
     applySession(null);
     showToast('Você saiu da comunidade.');
   });
 
-  client?.auth.onAuthStateChange((event, nextSession) => {
+  function showOAuthErrorFromUrl() {
+    const params = new URLSearchParams(location.hash.replace(/^#/, '') || location.search.replace(/^\?/, ''));
+    const errorDescription = params.get('error_description');
+    if (!errorDescription) return;
+    openAuth();
+    setAuthMessage('O login não foi concluído. Verifique sua conta ou tente novamente.');
+    history.replaceState(null, '', location.pathname);
+  }
+
+  if (!client) {
+    renderEmptyChat('O serviço da comunidade não pôde ser carregado.');
+    if (statusCopy) statusCopy.textContent = 'Serviço temporariamente indisponível.';
+    googleBtn?.setAttribute('disabled', 'true');
+    return;
+  }
+
+  showOAuthErrorFromUrl();
+
+  client.auth.onAuthStateChange((event, nextSession) => {
+    const previousUserId = session?.user?.id;
+    const nextUserId = nextSession?.user?.id;
     applySession(nextSession);
 
     if (event === 'SIGNED_IN') {
       closeAuth();
-      setTimeout(() => showToast('Bem-vindo à comunidade Ítalo Football!'), 350);
-      setTimeout(loadCommunityData, 0);
+      if (previousUserId !== nextUserId) showToast('Bem-vindo à comunidade Ítalo Football!');
     }
-
-    if (event === 'SIGNED_OUT') {
-      stopRealtime();
-    }
+    if (nextSession && previousUserId !== nextUserId) loadCommunityData();
+    if (!nextSession) stopRealtime();
   });
 
   (async () => {
-    if (!client) return;
     const { data, error } = await client.auth.getSession();
     if (error) {
-      console.error('Não foi possível recuperar a sessão:', error);
+      console.error('Falha ao recuperar sessão:', error);
+      showToast('Não foi possível recuperar sua sessão.');
       return;
     }
-
     applySession(data.session);
     if (data.session) await loadCommunityData();
   })();
