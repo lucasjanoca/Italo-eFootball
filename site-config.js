@@ -1,53 +1,33 @@
 window.ITALO_SITE_CONFIG=Object.freeze({
-  auditVersion:"2026-09-12-community-v2",
-  assetVersion:"20260912-2",
+  auditVersion:"2026-09-12-launch",
+  assetVersion:"20260912-launch4",
   lockVideoSelection:true,
   lockViewCounts:true,
   videoSlots:8,
   courseUrl:"https://pay.kiwify.com.br/yAdCPJy",
   youtubeChannelUrl:"https://www.youtube.com/channel/UCaThC5oHN4mG59Ya8WGQLmQ",
-  communityUrl:"comunidade.html"
+  communityUrl:"comunidade.html",
+  tournamentsUrl:"torneios.html"
 });
 
-(() => {
-  const version = window.ITALO_SITE_CONFIG?.assetVersion || '1';
-  const addStylesheet = (href, marker) => {
-    if (document.querySelector(`link[${marker}]`)) return;
-    const css = document.createElement('link');
-    css.rel = 'stylesheet';
-    css.href = `${href}?v=${encodeURIComponent(version)}`;
-    css.setAttribute(marker, 'true');
-    document.head.appendChild(css);
+(()=>{
+  const version=window.ITALO_SITE_CONFIG?.assetVersion||'1';
+  const addStylesheet=(href,marker)=>{
+    if(document.querySelector(`link[${marker}]`))return;
+    const css=document.createElement('link');css.rel='stylesheet';css.href=`${href}?v=${encodeURIComponent(version)}`;css.setAttribute(marker,'true');document.head.appendChild(css);
   };
-
-  addStylesheet('generated-assets.css', 'data-generated-assets');
-  addStylesheet('production-fixes.css', 'data-production-fixes');
-
-  if (/\/grupos\.html(?:$|[?#])/i.test(location.pathname + location.search + location.hash)) {
-    location.replace('comunidade.html');
-    return;
-  }
-
-  const normalizeCommunityLinks = () => {
-    document.querySelectorAll('a[href]').forEach(link => {
-      const href = (link.getAttribute('href') || '').trim().toLowerCase();
-      const label = (link.textContent || '').replace(/\s+/g,' ').trim().toLowerCase();
-      if (
-        href === 'grupos.html' ||
-        href.endsWith('/grupos.html') ||
-        label === 'comunidades' ||
-        label.includes('entrar na comunidade')
-      ) {
-        link.href = 'comunidade.html';
-        link.removeAttribute('target');
-        link.removeAttribute('rel');
-      }
-    });
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', normalizeCommunityLinks, { once:true });
-  } else {
-    normalizeCommunityLinks();
-  }
+  addStylesheet('generated-assets.css','data-generated-assets');
+  addStylesheet('production-fixes.css','data-production-fixes');
+  addStylesheet('carousel-enhancements.css','data-carousel-enhancements');
+  addStylesheet('launch.css','data-launch-css');
+  if(/\/grupos\.html(?:$|[?#])/i.test(location.pathname+location.search+location.hash)){location.replace('comunidade.html');return;}
+  const normalize=()=>document.querySelectorAll('a[href]').forEach(link=>{
+    const href=(link.getAttribute('href')||'').trim().toLowerCase();
+    const label=(link.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+    if(href==='grupos.html'||href.endsWith('/grupos.html')||label==='comunidades'||label.includes('entrar na comunidade')){
+      link.href='comunidade.html';link.removeAttribute('target');link.removeAttribute('rel');
+      if(label.includes('entrar na comunidade')){const text=link.querySelector('.r-action-label');if(text)text.textContent='Abrir comunidade';else if(link.children.length===0)link.textContent='Abrir comunidade';}
+    }
+  });
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',normalize,{once:true}):normalize();
 })();
