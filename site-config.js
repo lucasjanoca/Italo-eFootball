@@ -1,5 +1,6 @@
 window.ITALO_SITE_CONFIG=Object.freeze({
-  auditVersion:"2026-09-12-production",
+  auditVersion:"2026-09-12-community-v2",
+  assetVersion:"20260912-2",
   lockVideoSelection:true,
   lockViewCounts:true,
   videoSlots:8,
@@ -9,11 +10,12 @@ window.ITALO_SITE_CONFIG=Object.freeze({
 });
 
 (() => {
+  const version = window.ITALO_SITE_CONFIG?.assetVersion || '1';
   const addStylesheet = (href, marker) => {
     if (document.querySelector(`link[${marker}]`)) return;
     const css = document.createElement('link');
     css.rel = 'stylesheet';
-    css.href = href;
+    css.href = `${href}?v=${encodeURIComponent(version)}`;
     css.setAttribute(marker, 'true');
     document.head.appendChild(css);
   };
