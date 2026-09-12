@@ -7,6 +7,8 @@ button:disabled,[aria-disabled="true"]{cursor:not-allowed;opacity:.58}
 .mobile-menu{max-height:calc(100dvh - 68px);overflow-y:auto;overscroll-behavior:contain}
 .c-input input{min-width:0}
 .c-msg span,.c-topic strong,.c-topic small{overflow-wrap:anywhere}
+.c-topic[data-topic-id]{appearance:none;width:100%;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.c-topic[data-topic-id]:focus-visible{outline-offset:-3px}
 .c-coming-badge{
   display:inline-flex;align-items:center;gap:7px;width:max-content;
   padding:6px 9px;border-radius:999px;border:1px solid rgba(255,255,255,.14);
@@ -28,8 +30,6 @@ button:disabled,[aria-disabled="true"]{cursor:not-allowed;opacity:.58}
 .c-system-status{display:flex;align-items:center;gap:9px;margin:12px 0 16px;color:#cbd0d6;font-size:13px}
 .c-system-status b{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:#133520;border:1px solid #2b7847;color:#dffff0;font-size:11px}
 .c-system-status b:before{content:"";width:8px;height:8px;border-radius:50%;background:#2cff85;box-shadow:0 0 10px #2cff85}
-.c-topic[data-topic-id]{cursor:pointer}
-.c-topic[data-topic-id]:focus-visible{outline-offset:-3px}
 .c-live-note{color:#8e96a0;font-size:11px;margin-top:8px}
 .r-video-dot{touch-action:manipulation}
 .r-video-viewport{scrollbar-width:none}
