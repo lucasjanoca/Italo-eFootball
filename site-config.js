@@ -1,4 +1,5 @@
 window.ITALO_SITE_CONFIG=Object.freeze({
+  auditVersion:"2026-09-12-production",
   lockVideoSelection:true,
   lockViewCounts:true,
   videoSlots:8,
