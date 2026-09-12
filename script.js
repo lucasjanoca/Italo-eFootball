@@ -1,211 +1,50 @@
-const menuBtn = document.querySelector('.menu-btn');
-const mobileMenu = document.querySelector('.mobile-menu');
+const menuBtn=document.querySelector('.menu-btn');
+const mobileMenu=document.querySelector('.mobile-menu');
+function setMenu(open){if(!menuBtn||!mobileMenu)return;mobileMenu.classList.toggle('open',open);menuBtn.classList.toggle('open',open);menuBtn.setAttribute('aria-expanded',String(open));mobileMenu.setAttribute('aria-hidden',String(!open));document.body.classList.toggle('menu-open',open)}
+if(menuBtn&&mobileMenu){menuBtn.addEventListener('click',()=>setMenu(!mobileMenu.classList.contains('open')));mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));document.addEventListener('click',e=>{if(mobileMenu.classList.contains('open')&&!mobileMenu.contains(e.target)&&!menuBtn.contains(e.target))setMenu(false)})}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
+window.addEventListener('resize',()=>{if(innerWidth>760)setMenu(false)},{passive:true});
 
-function setMenu(open) {
-  if (!menuBtn || !mobileMenu) return;
-  mobileMenu.classList.toggle('open', open);
-  menuBtn.classList.toggle('open', open);
-  menuBtn.setAttribute('aria-expanded', String(open));
-  mobileMenu.setAttribute('aria-hidden', String(!open));
-  document.body.classList.toggle('menu-open', open);
-}
+const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const revealItems=document.querySelectorAll('.reveal');
+if('IntersectionObserver'in window&&!reduceMotion){const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}}),{threshold:.1,rootMargin:'0px 0px -24px'});revealItems.forEach(el=>o.observe(el))}else revealItems.forEach(el=>el.classList.add('visible'));
+const year=document.querySelector('#year');if(year)year.textContent=new Date().getFullYear();
 
-if (menuBtn && mobileMenu) {
-  menuBtn.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
-  mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
-  document.addEventListener('click', event => {
-    if (!mobileMenu.classList.contains('open')) return;
-    if (!mobileMenu.contains(event.target) && !menuBtn.contains(event.target)) setMenu(false);
-  });
-}
+const config=window.ITALO_SITE_CONFIG||{};
+const courseUrl=config.courseUrl||'https://pay.kiwify.com.br/yAdCPJy';
+const youtubeChannelUrl=config.youtubeChannelUrl||'https://www.youtube.com/channel/UCaThC5oHN4mG59Ya8WGQLmQ';
+document.querySelectorAll('[data-course-checkout]').forEach(a=>{a.href=courseUrl;a.target='_blank';a.rel='noopener noreferrer'});
 
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') setMenu(false);
+document.querySelectorAll('.desktop-nav,.mobile-menu').forEach(nav=>{
+  if(nav.querySelector('a[href="torneios.html"]'))return;
+  const link=document.createElement('a');link.href='torneios.html';link.textContent='Torneios';
+  if(/torneios\.html$/i.test(location.pathname))link.classList.add('active');
+  const contact=[...nav.querySelectorAll('a')].find(a=>/contato\.html/.test(a.getAttribute('href')||''));
+  contact?nav.insertBefore(link,contact):nav.append(link);
 });
 
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const revealItems = document.querySelectorAll('.reveal');
+document.querySelectorAll('.desktop-nav a[href="curso.html"],.mobile-menu a[href="curso.html"]').forEach(a=>a.textContent='Cursos');
 
-if ('IntersectionObserver' in window && !reduceMotion) {
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: .12, rootMargin: '0px 0px -30px' });
-  revealItems.forEach(el => observer.observe(el));
-} else {
-  revealItems.forEach(el => el.classList.add('visible'));
-}
-
-const year = document.querySelector('#year');
-if (year) year.textContent = new Date().getFullYear();
-
-window.addEventListener('resize', () => {
-  if (window.innerWidth > 760) setMenu(false);
-}, { passive:true });
-
-const config = window.ITALO_SITE_CONFIG || {};
-const courseCheckoutUrl = config.courseUrl || 'https://pay.kiwify.com.br/yAdCPJy';
-const youtubeChannelUrl = config.youtubeChannelUrl || 'https://www.youtube.com/channel/UCaThC5oHN4mG59Ya8WGQLmQ';
-const communityUrl = config.communityUrl || 'comunidade.html';
-
-document.querySelectorAll('[data-course-checkout]').forEach(link => {
-  link.href = courseCheckoutUrl;
-  link.target = '_blank';
-  link.rel = 'noopener noreferrer';
+document.querySelectorAll('a[href]').forEach(link=>{
+  const raw=link.getAttribute('href')||'';const label=(link.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+  if(label.includes('entrar na comunidade')){link.href='comunidade.html';const t=link.querySelector('.r-action-label');if(t)t.textContent='Abrir comunidade';}
+  try{const url=new URL(raw,location.href);const host=url.hostname.replace(/^www\./,'').toLowerCase();const isVideo=host==='youtu.be'||(['youtube.com','m.youtube.com'].includes(host)&&(url.pathname==='/watch'||url.searchParams.has('v')||/^\/(shorts|live|embed)\//i.test(url.pathname)));if(['youtube.com','m.youtube.com'].includes(host)&&!isVideo){link.href=youtubeChannelUrl}const finalUrl=new URL(link.getAttribute('href'),location.href);if(/^https?:$/.test(finalUrl.protocol)&&finalUrl.origin!==location.origin){link.target='_blank';link.rel='noopener noreferrer'}}catch{}
 });
 
-document.querySelectorAll('.desktop-nav a[href="curso.html"], .mobile-menu a[href="curso.html"]').forEach(link => {
-  link.textContent = 'Cursos';
+const logo='assets/italo-football-logo.svg';
+document.querySelectorAll('a.brand').forEach(brand=>{const footer=brand.classList.contains('brand-footer');brand.classList.add('brand-upgraded');brand.innerHTML=`<img class="brand-unified-logo${footer?' brand-unified-logo-footer':''}" src="${logo}" alt="Ítalo Football" decoding="async"${footer?' loading="lazy"':''}>`});
+
+const infoLogo='https://infotech-io.com.br/assets/brand/logo.webp';
+const plexoUrl='https://www.tiktok.com/@plexoplace?_r=1&_t=ZS-99E1bmV05YI';
+document.querySelectorAll('.site-footer .credit').forEach(credit=>{
+  const box=document.createElement('div');box.className='site-partners';box.setAttribute('aria-label','Desenvolvimento e Design');box.innerHTML=`
+    <span class="site-partners-title">Desenvolvimento e Design</span>
+    <a class="site-partner site-partner-info" href="https://infotech-io.com.br/" target="_blank" rel="noopener noreferrer" aria-label="Abrir site da InfoTech.io"><img src="${infoLogo}" alt="InfoTech.io" loading="lazy" decoding="async"><span><strong>InfoTech.io</strong><small>Desenvolvimento</small></span></a>
+    <a class="site-partner site-partner-plexo" href="${plexoUrl}" target="_blank" rel="noopener noreferrer" aria-label="Abrir perfil da Plexo"><span class="site-plexo-brand" aria-hidden="true"><svg viewBox="0 0 100 100"><path d="M50 7 L62 37 L93 50 L62 63 L50 93 L38 63 L7 50 L38 37 Z" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/><path d="M50 42 L55 50 L50 58 L45 50 Z" fill="currentColor"/></svg><b>PLEXO</b></span><span><strong>Plexo</strong><small>Design</small></span></a>
+    <span class="site-partners-bottom">InfoTech.io + Plexo</span>`;
+  box.querySelector('img')?.addEventListener('error',e=>e.currentTarget.style.display='none',{once:true});credit.replaceWith(box)
 });
 
-document.querySelectorAll('a[href]').forEach(link => {
-  if (link.hasAttribute('data-course-checkout')) return;
-  const rawHref = link.getAttribute('href') || '';
-  try {
-    const url = new URL(rawHref, window.location.href);
-    const host = url.hostname.replace(/^www\./, '').toLowerCase();
-    if (host === 'pay.kiwify.com.br') {
-      link.href = 'curso.html';
-      link.removeAttribute('target');
-      link.removeAttribute('rel');
-    }
-  } catch {
-    /* Um link inválido isolado não deve quebrar o restante do site. */
-  }
-});
-
-function isYoutubeVideoUrl(rawHref) {
-  try {
-    const url = new URL(rawHref, window.location.href);
-    const host = url.hostname.replace(/^www\./, '').toLowerCase();
-    if (host === 'youtu.be') return true;
-    if (!['youtube.com', 'm.youtube.com'].includes(host)) return false;
-    return url.pathname === '/watch' ||
-      url.searchParams.has('v') ||
-      /^\/(shorts|live|embed)\//i.test(url.pathname);
-  } catch {
-    return false;
-  }
-}
-
-function isYoutubeChannelUrl(rawHref) {
-  try {
-    const url = new URL(rawHref, window.location.href);
-    const host = url.hostname.replace(/^www\./, '').toLowerCase();
-    if (!['youtube.com', 'm.youtube.com'].includes(host)) return false;
-    return !isYoutubeVideoUrl(rawHref);
-  } catch {
-    return false;
-  }
-}
-
-document.querySelectorAll('a[href]').forEach(link => {
-  const label = (link.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-  const href = (link.getAttribute('href') || '').trim();
-
-  if (label.includes('entrar na comunidade') || href === 'grupos.html') {
-    link.href = communityUrl;
-    link.removeAttribute('target');
-    link.removeAttribute('rel');
-    return;
-  }
-
-  if (isYoutubeChannelUrl(href)) {
-    link.href = youtubeChannelUrl;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-  }
-});
-
-/* Marca unificada no cabeçalho e no rodapé. */
-const italoLogoUrl = 'assets/italo-football-logo.svg';
-document.querySelectorAll('a.brand').forEach(brand => {
-  const isFooter = brand.classList.contains('brand-footer');
-  brand.classList.add('brand-upgraded');
-  brand.innerHTML = `<img class="brand-unified-logo${isFooter ? ' brand-unified-logo-footer' : ''}" src="${italoLogoUrl}" alt="Ítalo Football" decoding="async"${isFooter ? ' loading="lazy"' : ''}>`;
-});
-
-/* Créditos de desenvolvimento/parceria. */
-const infoTechLogoUrl = 'https://infotech-io.com.br/assets/brand/logo.webp';
-const plexoUrl = 'https://www.tiktok.com/@plexoplace?_r=1&_t=ZS-99E1bmV05YI';
-
-document.querySelectorAll('.site-footer .credit').forEach(credit => {
-  const partners = document.createElement('div');
-  partners.className = 'site-partners';
-  partners.setAttribute('aria-label', 'Desenvolvimento e parceria');
-  partners.innerHTML = `
-    <span class="site-partners-title">Desenvolvimento e parceria</span>
-    <a class="site-partner site-partner-info" href="https://infotech-io.com.br/" target="_blank" rel="noopener noreferrer" aria-label="Abrir site da InfoTech.io">
-      <img src="${infoTechLogoUrl}" alt="InfoTech.io" loading="lazy" decoding="async">
-      <span><strong>InfoTech.io</strong><small>Desenvolvimento</small></span>
-    </a>
-    <a class="site-partner site-partner-plexo" href="${plexoUrl}" target="_blank" rel="noopener noreferrer" aria-label="Abrir perfil da Plexo">
-      <span class="site-plexo-brand" aria-hidden="true">
-        <svg viewBox="0 0 100 100"><path d="M50 7 L62 37 L93 50 L62 63 L50 93 L38 63 L7 50 L38 37 Z" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/><path d="M50 42 L55 50 L50 58 L45 50 Z" fill="currentColor"/></svg>
-        <b>PLEXO</b>
-      </span>
-      <span><strong>Plexo</strong><small>Parceria</small></span>
-    </a>
-    <span class="site-partners-bottom">InfoTech.io + Plexo</span>
-  `;
-
-  const infoLogo = partners.querySelector('.site-partner-info img');
-  infoLogo?.addEventListener('error', () => {
-    infoLogo.style.display = 'none';
-  }, { once:true });
-
-  credit.replaceWith(partners);
-});
-
-if (!document.querySelector('#brand-partners-style')) {
-  const style = document.createElement('style');
-  style.id = 'brand-partners-style';
-  style.textContent = `
-    .brand.brand-upgraded{display:flex;align-items:center;width:auto;line-height:1;font-style:normal;letter-spacing:0}
-    .brand-upgraded .brand-unified-logo{display:block;width:190px;height:auto;max-height:56px;object-fit:contain;object-position:left center;filter:drop-shadow(0 0 10px rgba(255,32,55,.12))}
-    .brand-upgraded .brand-unified-logo-footer{width:172px;max-height:52px}
-    .site-partners{grid-column:1/-1;width:min(100%,680px);margin:2px auto 22px;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch;justify-self:center}
-    .site-partners-title{grid-column:1/-1;text-align:center;font-size:9px;letter-spacing:.19em;text-transform:uppercase;color:#75808d;font-weight:900}
-    .site-partner{min-height:72px;border-radius:18px;display:flex;align-items:center;justify-content:center;gap:12px;padding:11px 15px;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
-    .site-partner:hover{transform:translateY(-2px)}
-    .site-partner>span:last-child{display:flex;flex-direction:column;line-height:1.1}
-    .site-partner strong{font-size:13px;color:#fff}.site-partner small{margin-top:5px;color:#82909e;font-size:8px;text-transform:uppercase;font-weight:900;letter-spacing:.08em}
-    .site-partner-info{background:#020712;border:1px solid rgba(120,218,255,.18);box-shadow:0 10px 30px rgba(15,89,164,.08)}
-    .site-partner-info img{width:118px;height:42px;display:block;object-fit:contain;object-position:center}
-    .site-partner-plexo{background:linear-gradient(145deg,#052636,#073e51);border:1px solid rgba(24,215,255,.28);box-shadow:0 10px 30px rgba(4,87,112,.12)}
-    .site-plexo-brand{display:flex!important;align-items:center;gap:7px;color:#18d7ff}.site-plexo-brand svg{width:34px;height:34px;flex:0 0 34px}.site-plexo-brand b{font-size:13px;color:#fff;letter-spacing:.08em}
-    .site-partners-bottom{grid-column:1/-1;text-align:center;color:#59636f;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
-    @media(max-width:1080px){.site-partners{grid-column:1/-1;margin-top:8px}}
-    @media(max-width:760px){.brand-upgraded .brand-unified-logo{width:176px;max-height:50px}.brand-upgraded .brand-unified-logo-footer{width:162px}.site-partners{grid-template-columns:1fr;width:min(100%,520px);gap:7px;margin-bottom:8px}.site-partners-title,.site-partners-bottom{grid-column:1}.site-partner{min-height:64px;padding:8px 12px}.site-partner-info img{width:108px;height:36px}.site-plexo-brand svg{width:31px;height:31px;flex-basis:31px}}
-  `;
-  document.head.appendChild(style);
-}
-
-/* Segurança consistente para links externos. */
-document.querySelectorAll('a[href]').forEach(link => {
-  try {
-    const url = new URL(link.getAttribute('href'), window.location.href);
-    if ((url.protocol === 'http:' || url.protocol === 'https:') && url.origin !== window.location.origin) {
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-    }
-  } catch {
-    /* Links relativos não precisam de tratamento. */
-  }
-});
-
-document.querySelectorAll('a[href="index.html"]').forEach(link => {
-  link.addEventListener('click', event => {
-    const path = window.location.pathname;
-    const onHome = path.endsWith('/index.html') || path.endsWith('/Italo-eFootball/') || path === '/';
-    if (!onHome) return;
-    event.preventDefault();
-    setMenu(false);
-    window.history.replaceState(null, '', 'index.html');
-    window.scrollTo({ top:0, behavior:reduceMotion ? 'auto' : 'smooth' });
-  });
-});
+if(!document.querySelector('#brand-partners-style')){const s=document.createElement('style');s.id='brand-partners-style';s.textContent=`
+.brand.brand-upgraded{display:flex;align-items:center;width:auto;line-height:1}.brand-upgraded .brand-unified-logo{display:block;width:190px;height:auto;max-height:56px;object-fit:contain;object-position:left center}.brand-upgraded .brand-unified-logo-footer{width:172px;max-height:52px}.site-partners{grid-column:1/-1;width:min(100%,680px);margin:2px auto 22px;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch;justify-self:center}.site-partners-title{grid-column:1/-1;text-align:center;font-size:9px;letter-spacing:.19em;text-transform:uppercase;color:#75808d;font-weight:900}.site-partner{min-height:72px;border-radius:18px;display:flex;align-items:center;justify-content:center;gap:12px;padding:11px 15px;transition:.18s}.site-partner:hover{transform:translateY(-2px)}.site-partner>span:last-child{display:flex;flex-direction:column;line-height:1.1}.site-partner strong{font-size:13px;color:#fff}.site-partner small{margin-top:5px;color:#82909e;font-size:8px;text-transform:uppercase;font-weight:900;letter-spacing:.08em}.site-partner-info{background:#020712;border:1px solid rgba(120,218,255,.18)}.site-partner-info img{width:118px;height:42px;object-fit:contain}.site-partner-plexo{background:linear-gradient(145deg,#052636,#073e51);border:1px solid rgba(24,215,255,.28)}.site-plexo-brand{display:flex!important;align-items:center;gap:7px;color:#18d7ff}.site-plexo-brand svg{width:34px;height:34px}.site-plexo-brand b{font-size:13px;color:#fff;letter-spacing:.08em}.site-partners-bottom{grid-column:1/-1;text-align:center;color:#59636f;font-size:9px;letter-spacing:.12em;text-transform:uppercase}@media(max-width:760px){.brand-upgraded .brand-unified-logo{width:176px}.site-partners{grid-template-columns:1fr;width:min(100%,520px)}.site-partners-title,.site-partners-bottom{grid-column:1}.site-partner{min-height:64px}}
+`;document.head.appendChild(s)}
