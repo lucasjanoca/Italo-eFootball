@@ -1,6 +1,6 @@
 window.ITALO_SITE_CONFIG=Object.freeze({
-  auditVersion:"2026-09-12-launch",
-  assetVersion:"20260912-launch5",
+  auditVersion:"2026-09-12-final-launch",
+  assetVersion:"20260912-final6",
   lockVideoSelection:true,
   lockViewCounts:true,
   videoSlots:8,
@@ -24,15 +24,23 @@ window.ITALO_SITE_CONFIG=Object.freeze({
   addStylesheet('production-fixes.css','data-production-fixes');
   addStylesheet('carousel-enhancements.css','data-carousel-enhancements');
   addStylesheet('launch.css','data-launch-css');
-  addScript('launch-social.js','data-launch-social');
+  if(document.querySelector('[data-social-actions],[data-social-auth],[data-profile-app],[data-admin-app]'))addScript('launch-social.js','data-launch-social');
   if(/\/grupos\.html(?:$|[?#])/i.test(location.pathname+location.search+location.hash)){location.replace('comunidade.html');return;}
-  const normalize=()=>document.querySelectorAll('a[href]').forEach(link=>{
-    const href=(link.getAttribute('href')||'').trim().toLowerCase();
-    const label=(link.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
-    if(href==='grupos.html'||href.endsWith('/grupos.html')||label==='comunidades'||label.includes('entrar na comunidade')){
-      link.href='comunidade.html';link.removeAttribute('target');link.removeAttribute('rel');
-      if(label.includes('entrar na comunidade')){const text=link.querySelector('.r-action-label');if(text)text.textContent='Abrir comunidade';else if(link.children.length===0)link.textContent='Abrir comunidade';}
-    }
-  });
+
+  const normalize=()=>{
+    document.querySelectorAll('.desktop-nav,.mobile-menu').forEach(nav=>{
+      if(nav.querySelector('a[href="torneios.html"]'))return;
+      const link=document.createElement('a');link.href='torneios.html';link.textContent='Torneios';
+      const contact=nav.querySelector('a[href="contato.html"]');contact?nav.insertBefore(link,contact):nav.append(link);
+    });
+    document.querySelectorAll('a[href]').forEach(link=>{
+      const href=(link.getAttribute('href')||'').trim().toLowerCase();
+      const label=(link.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+      if(href==='grupos.html'||href.endsWith('/grupos.html')||label==='comunidades'||label.includes('entrar na comunidade')){
+        link.href='comunidade.html';link.removeAttribute('target');link.removeAttribute('rel');
+        if(label.includes('entrar na comunidade')){const text=link.querySelector('.r-action-label');if(text)text.textContent='Abrir comunidade';else if(link.children.length===0)link.textContent='Abrir comunidade';}
+      }
+    });
+  };
   document.readyState==='loading'?document.addEventListener('DOMContentLoaded',normalize,{once:true}):normalize();
 })();
