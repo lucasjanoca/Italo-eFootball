@@ -1,0 +1,55 @@
+/* Ítalo Football — correções de produção e acessibilidade */
+:where(a,button,input,summary):focus-visible{
+  outline:3px solid rgba(255,54,80,.78);
+  outline-offset:3px;
+}
+button:disabled,[aria-disabled="true"]{cursor:not-allowed;opacity:.58}
+.mobile-menu{max-height:calc(100dvh - 68px);overflow-y:auto;overscroll-behavior:contain}
+.c-input input{min-width:0}
+.c-msg span,.c-topic strong,.c-topic small{overflow-wrap:anywhere}
+.c-coming-badge{
+  display:inline-flex;align-items:center;gap:7px;width:max-content;
+  padding:6px 9px;border-radius:999px;border:1px solid rgba(255,255,255,.14);
+  background:#14181e;color:#aeb5bf;font-size:9px;font-weight:1000;
+  letter-spacing:.11em;text-transform:uppercase
+}
+.c-coming-card{
+  position:relative;min-height:120px;border:1px solid rgba(255,255,255,.12);
+  border-radius:13px;background:linear-gradient(180deg,#101318,#0a0c0f);
+  padding:18px;display:flex;flex-direction:column;justify-content:center;gap:7px
+}
+.c-coming-card strong{font-size:17px}
+.c-coming-card p{margin:0;color:#9098a3;font-size:12px;line-height:1.45}
+.c-coming-card [data-coming-soon]{
+  margin-top:5px;align-self:flex-start;min-height:40px;padding:0 14px;border-radius:9px;
+  border:1px solid rgba(255,255,255,.12);background:#171b21;color:#a8afb8;
+  font-weight:850
+}
+.c-system-status{display:flex;align-items:center;gap:9px;margin:12px 0 16px;color:#cbd0d6;font-size:13px}
+.c-system-status b{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:#133520;border:1px solid #2b7847;color:#dffff0;font-size:11px}
+.c-system-status b:before{content:"";width:8px;height:8px;border-radius:50%;background:#2cff85;box-shadow:0 0 10px #2cff85}
+.c-topic[data-topic-id]{cursor:pointer}
+.c-topic[data-topic-id]:focus-visible{outline-offset:-3px}
+.c-live-note{color:#8e96a0;font-size:11px;margin-top:8px}
+.r-video-dot{touch-action:manipulation}
+.r-video-viewport{scrollbar-width:none}
+.r-video-viewport:focus-visible{outline-offset:4px}
+
+@media(max-width:620px){
+  .c-msg{
+    grid-template-columns:32px minmax(0,1fr) auto!important;
+    grid-template-areas:"avatar name time" "avatar body body"!important;
+    align-items:start!important;gap:4px 7px!important;font-size:11px!important
+  }
+  .c-msg img{grid-area:avatar!important;width:30px!important;height:30px!important}
+  .c-msg strong{grid-area:name!important;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .c-msg time{grid-area:time!important}
+  .c-msg span{grid-area:body!important;min-width:0;line-height:1.4}
+  .c-input{grid-template-columns:42px minmax(0,1fr) 46px!important}
+  .c-system-status{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:420px){
+  .brand-upgraded .brand-unified-logo{width:min(148px,48vw)!important}
+  .nav-actions{gap:5px}
+  .c-auth-card{padding:20px 16px}
+}
