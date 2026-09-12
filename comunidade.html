@@ -1,203 +1,25 @@
-<!doctype html>
-<html lang="pt-BR" class="no-js">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#050608">
-  <meta name="color-scheme" content="dark">
-  <meta name="description" content="Comunidade Ítalo Football — chat, convites para partidas e Resenha com dados reais para jogadores de eFootball.">
-  <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://lucasjanoca.github.io/Italo-eFootball/comunidade.html">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="pt_BR">
-  <meta property="og:title" content="Ítalo Football | Comunidade">
-  <meta property="og:description" content="Converse, encontre jogadores e participe da Resenha da comunidade Ítalo Football.">
-  <meta property="og:image" content="https://lucasjanoca.github.io/Italo-eFootball/assets/generated/comunidade-hero.svg">
-  <meta name="twitter:card" content="summary_large_image">
-  <title>Ítalo Football | Comunidade</title>
-  <link rel="icon" href="assets/logo.jpg" type="image/jpeg">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="pages.css">
-  <link rel="stylesheet" href="polish.css">
-  <link rel="stylesheet" href="redesign.css">
-  <link rel="stylesheet" href="generated-assets.css" data-generated-assets>
-  <link rel="stylesheet" href="production-fixes.css" data-production-fixes>
-  <script>document.documentElement.classList.remove('no-js');document.documentElement.classList.add('js');</script>
-  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3"></script>
-  <script defer src="site-config.js"></script>
-  <script defer src="script.js"></script>
-  <script defer src="community.js"></script>
-</head>
-<body class="community-redesign">
-  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-  <div class="noise" aria-hidden="true"></div>
+<!doctype html><html lang="pt-BR" class="no-js"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050608"><meta name="color-scheme" content="dark">
+<meta name="description" content="Comunidade Ítalo Football: conversa, jogadores, Resenha, ranking e torneios de eFootball."><meta name="robots" content="index,follow"><link rel="canonical" href="https://lucasjanoca.github.io/Italo-eFootball/comunidade.html"><title>Ítalo Football | Comunidade</title>
+<link rel="icon" href="assets/logo.jpg" type="image/jpeg"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="pages.css"><link rel="stylesheet" href="polish.css"><link rel="stylesheet" href="social.css"><link rel="stylesheet" href="social-v2.css"><link rel="stylesheet" href="community-v2.css">
+<script>document.documentElement.classList.remove('no-js');document.documentElement.classList.add('js');</script><script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3"></script><script defer src="site-config.js"></script><script defer src="script.js"></script><script defer src="social.js"></script><script defer src="community.js"></script>
+</head><body class="community-v2"><a class="skip-link" href="#conteudo">Pular para o conteúdo</a><div class="noise" aria-hidden="true"></div>
+<header class="site-header"><div class="shell nav-wrap"><a class="brand" href="index.html" aria-label="Ítalo Football — início"><span class="brand-main">ÍTALO</span><span class="brand-sub">FOOTBALL</span></a><nav class="desktop-nav" aria-label="Navegação principal"><a href="index.html">Início</a><a href="videos.html">Vídeos</a><a href="curso.html">Cursos</a><a class="active" href="comunidade.html">Comunidade</a><a href="torneios.html">Torneios</a><a href="contato.html">Contato</a></nav><div class="nav-actions"><div class="social-header-actions" data-social-actions></div><button class="menu-btn" type="button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button></div></div><nav class="mobile-menu" aria-hidden="true"><a href="index.html">Início</a><a href="videos.html">Vídeos</a><a href="curso.html">Cursos</a><a class="active" href="comunidade.html">Comunidade</a><a href="torneios.html">Torneios</a><a href="contato.html">Contato</a></nav></header>
+<main id="conteudo">
+<section class="community-hero"><div class="community-shell community-hero-grid"><div><p class="community-kicker">COMUNIDADE ÍTALO FOOTBALL</p><h1>Jogue, converse e <strong>evolua junto.</strong></h1><p>Converse com outros jogadores, encontre partidas, acompanhe torneios e participe da comunidade em tempo real.</p><div class="community-hero-actions"><a class="btn btn-red" href="#chat">Participar da conversa <span>›</span></a><a class="btn btn-outline" href="torneios.html">Ver torneios</a></div></div><figure class="community-hero-art"><img src="assets/generated/comunidade-home.webp" alt="Comunidade de jogadores de eFootball reunida em clima competitivo" width="1200" height="860" decoding="async"></figure></div></section>
+<section class="community-shell community-grid">
+<div class="community-main">
+<section class="community-card" id="chat" aria-labelledby="chat-title"><header class="community-card-head"><div><h2 id="chat-title">Chat da comunidade</h2><p>Conversa rápida com mensagens temporárias e moderação.</p></div><span class="role-badge member" data-chat-status>Online</span></header><div class="community-card-body community-chat"><button class="social-btn secondary chat-load-more" type="button" data-load-older hidden>Carregar anteriores</button><div class="chat-messages" data-chat-messages aria-live="polite"><div class="community-skeleton"></div><div class="community-skeleton"></div><div class="community-skeleton"></div></div><div class="restriction-banner" data-chat-restriction hidden></div><form class="chat-compose" data-chat-form><textarea name="body" maxlength="500" rows="2" placeholder="Escreva uma mensagem…" aria-label="Mensagem" required></textarea><button class="social-btn primary chat-send" type="submit">Enviar</button></form><p class="community-note">As mensagens permanecem por até 12 horas. O envio possui limite de segurança contra spam.</p></div></section>
 
-  <header class="site-header">
-    <div class="shell nav-wrap">
-      <a class="brand" href="index.html" aria-label="Ítalo Football — início"><span class="brand-main">ÍTALO</span><span class="brand-sub">FOOTBALL</span></a>
-      <nav class="desktop-nav" aria-label="Navegação principal">
-        <a href="index.html">Início</a><a href="videos.html">Vídeos</a><a href="curso.html">Cursos</a><a class="active" href="comunidade.html">Comunidade</a><a href="contato.html">Contato</a>
-      </nav>
-      <div class="nav-actions">
-        <div class="c-user-chip" data-user-chip aria-live="polite">
-          <img data-user-avatar src="assets/avatar.jpg" alt="" width="34" height="34">
-          <span data-user-name>Jogador</span>
-          <button type="button" data-user-logout>Sair</button>
-        </div>
-        <button class="menu-btn" type="button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
-      </div>
-    </div>
-    <nav class="mobile-menu" aria-hidden="true">
-      <a href="index.html">Início</a><a href="videos.html">Vídeos</a><a href="curso.html">Cursos</a><a class="active" href="comunidade.html">Comunidade</a><a href="contato.html">Contato</a>
-    </nav>
-  </header>
+<section class="community-card" aria-labelledby="resenha-title"><header class="community-card-head"><div><h2 id="resenha-title">Resenha</h2><p>Compartilhe táticas, partidas e opiniões com a comunidade.</p></div></header><div class="community-card-body"><form class="feed-composer" data-post-form><textarea name="body" maxlength="800" placeholder="O que você quer compartilhar?" required></textarea><div class="feed-actions"><small><span data-post-count>0</span>/800</small><button class="social-btn primary" type="submit">Publicar</button></div></form><div class="post-feed" data-post-feed><div class="community-skeleton"></div><div class="community-skeleton"></div></div></div></section>
 
-  <main id="conteudo" class="c-main">
-    <section class="c-top">
-      <div class="c-shell c-hero-grid">
-        <div class="c-hero">
-          <p class="c-kicker">COMUNIDADE ÍTALO FOOTBALL</p>
-          <h1>Viva o eFootball em <strong>comunidade</strong></h1>
-          <p>Entre com sua conta Google para conversar em tempo real, criar convites para partidas e participar da Resenha.</p>
-          <div class="c-system-status" data-community-status><b>SISTEMA PRONTO</b><span>Entre para carregar os dados reais da comunidade.</span></div>
-          <a href="#chat" class="c-enter-btn" data-community-enter>💬 Entrar na comunidade &nbsp;›</a>
-        </div>
-        <div class="c-hero-art" aria-label="Recursos disponíveis na comunidade">
-          <div class="c-hero-stat"><b>💬</b><span>Chat real</span></div>
-          <div class="c-hero-stat"><b>🎮</b><span>Convites reais</span></div>
-          <div class="c-hero-stat"><b>⚽</b><span>Resenha real</span></div>
-          <div class="c-hero-stat"><b>🔒</b><span>RLS ativo</span></div>
-        </div>
-      </div>
-    </section>
-
-    <div class="c-shell c-community-stack">
-      <section class="c-section c-locked" id="chat" aria-labelledby="chat-title">
-        <div class="c-section-head">
-          <div class="c-title"><span class="ico">💬</span><div><h2 id="chat-title">Chat da comunidade</h2><p>Mensagens reais, salvas no Supabase e atualizadas em tempo real.</p></div></div>
-          <span class="c-pin">📌 Respeito, diversão e futebol sempre.</span>
-        </div>
-        <div class="c-chat-wrap">
-          <div class="c-chat">
-            <div class="c-messages" aria-live="polite" aria-label="Mensagens do chat"><div class="c-msg" data-chat-empty="true"><img src="assets/avatar.jpg" alt=""><strong>Ítalo Football</strong><time>agora</time><span>Entre com o Google para carregar as mensagens reais.</span></div></div>
-            <div class="c-input">
-              <button type="button" aria-label="Adicionar emoji" data-chat-emoji>☺</button>
-              <input type="text" maxlength="500" autocomplete="off" placeholder="Digite uma mensagem..." aria-label="Mensagem da comunidade">
-              <button type="button" data-chat-send aria-label="Enviar mensagem">➤</button>
-            </div>
-          </div>
-          <aside class="c-online-card"><b>⚡</b><strong>Tempo real</strong><p>Supabase Realtime</p><span>Novas mensagens aparecem sem atualizar a página.</span></aside>
-        </div>
-      </section>
-
-      <section class="c-section c-locked c-feature-section" id="convites" aria-labelledby="invites-title">
-        <div class="c-section-head">
-          <div class="c-title"><span class="ico">🎮</span><div><h2 id="invites-title">Convide para jogar</h2><p>Publique plataforma, horário e modo para encontrar outro jogador.</p></div></div>
-          <button class="c-tour-btn c-head-action" type="button" data-open-invite>Criar convite +</button>
-        </div>
-        <div class="c-feature-layout">
-          <figure class="c-feature-art"><img src="assets/generated/community-invite.svg" alt="Ilustração de jogadores combinando uma partida de eFootball" loading="lazy" decoding="async" width="1200" height="620"></figure>
-          <div class="c-feature-content">
-            <div class="c-data-state" data-invite-status aria-live="polite">Entre com o Google para carregar os convites reais.</div>
-            <div class="c-invite-grid" data-invite-grid aria-live="polite"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="c-section c-locked c-feature-section" id="resenha" aria-labelledby="resenha-title">
-        <div class="c-section-head">
-          <div class="c-title"><span class="ico">🗣️</span><div><h2 id="resenha-title">Resenha</h2><p>Postagens, curtidas e comentários reais da comunidade.</p></div></div>
-          <span class="c-live-badge">Dados reais</span>
-        </div>
-        <div class="c-feature-layout c-feature-layout-resenha">
-          <figure class="c-feature-art"><img src="assets/generated/community-resenha.svg" alt="Ilustração de conversa e interação entre jogadores da comunidade" loading="lazy" decoding="async" width="1200" height="620"></figure>
-          <div class="c-resenha-panel">
-            <form class="c-post-composer" data-post-form novalidate>
-              <label for="resenha-post">Compartilhe uma ideia</label>
-              <textarea id="resenha-post" name="body" maxlength="800" rows="4" placeholder="Fale sobre táticas, partidas, atualizações ou o que rolou no jogo..." required></textarea>
-              <div class="c-composer-footer"><span><b data-post-count>0</b>/800</span><button class="c-tour-btn" type="submit" data-post-submit>Publicar</button></div>
-            </form>
-            <div class="c-data-state" data-resenha-status aria-live="polite">Entre para carregar as publicações reais.</div>
-          </div>
-        </div>
-        <div class="c-post-feed" data-resenha-feed aria-live="polite"></div>
-      </section>
-
-      <section class="c-section" aria-labelledby="torneios-title">
-        <div class="c-section-head">
-          <div class="c-title"><span class="ico">🏆</span><div><h2 id="torneios-title">Torneios do Ítalo</h2><p>Inscrições, chaves e resultados ficarão reunidos aqui quando houver regras reais.</p></div></div>
-          <span class="c-coming-badge">Em breve</span>
-        </div>
-        <div class="c-coming-grid-wide">
-          <article class="c-coming-card"><strong>Sistema de torneios</strong><p>Esta área só será liberada quando existirem cadastro, regras, vagas e administração definidos.</p><button type="button" data-coming-soon>Em breve</button></article>
-          <article class="c-coming-card"><strong>Notificações</strong><p>Os avisos serão ativados junto de um fluxo real de torneios ou eventos da comunidade.</p><button type="button" data-coming-soon>Em breve</button></article>
-        </div>
-      </section>
-
-      <section class="c-section c-ranking-section" aria-labelledby="ranking-title">
-        <div class="c-section-head">
-          <div class="c-title"><span class="ico">🥇</span><div><h2 id="ranking-title">Ranking da comunidade</h2><p>Prévia visual pronta para receber pontuações reais futuramente.</p></div></div>
-          <span class="c-demo-badge">Demonstração</span>
-        </div>
-        <div class="c-ranking-layout">
-          <figure class="c-feature-art"><img src="assets/generated/community-ranking.svg" alt="Ilustração de pódio para o ranking da comunidade" loading="lazy" decoding="async" width="1200" height="620"></figure>
-          <div>
-            <p class="c-demo-note"><strong>Dados fictícios:</strong> os nomes e pontos abaixo servem somente para demonstrar o layout. Nenhuma pontuação é apresentada como real.</p>
-            <div class="c-ranking-demo" data-demo-ranking>
-              <article class="c-rank-demo top-1"><span class="c-rank-position">🥇 1</span><span class="c-rank-avatar">RM</span><strong>Rafael M.</strong><b>2.450 pts</b></article>
-              <article class="c-rank-demo top-2"><span class="c-rank-position">🥈 2</span><span class="c-rank-avatar">DR</span><strong>Diego R.</strong><b>2.210 pts</b></article>
-              <article class="c-rank-demo top-3"><span class="c-rank-position">🥉 3</span><span class="c-rank-avatar">ML</span><strong>Matheus L.</strong><b>1.980 pts</b></article>
-              <article class="c-rank-demo"><span class="c-rank-position">4</span><span class="c-rank-avatar">GP</span><strong>Gabriel P.</strong><b>1.750 pts</b></article>
-              <article class="c-rank-demo"><span class="c-rank-position">5</span><span class="c-rank-avatar">BS</span><strong>Bruno S.</strong><b>1.620 pts</b></article>
-            </div>
-          </div>
-        </div>
-        <div class="c-premium c-premium-safe"><span>⭐ Premium: benefícios, preço e cobrança ainda não foram definidos.</span><button type="button" data-coming-soon>Em breve</button></div>
-      </section>
-    </div>
-  </main>
-
-  <div class="c-auth-backdrop" data-auth-wrap aria-hidden="true">
-    <div class="c-auth-card" role="dialog" aria-modal="true" aria-labelledby="auth-title">
-      <button class="c-auth-close" type="button" data-auth-close aria-label="Fechar">×</button>
-      <img class="c-auth-logo" src="assets/italo-football-logo.svg" alt="Ítalo Football" width="500" height="160">
-      <h2 id="auth-title">Entre para continuar</h2>
-      <p>Use sua conta Google para participar do chat, publicar convites e interagir na Resenha.</p>
-      <button class="c-google-btn" type="button" data-google-login><span class="c-google-g">G</span> Continuar com Google</button>
-      <div class="c-auth-msg" data-auth-msg aria-live="polite"></div>
-    </div>
-  </div>
-
-  <div class="c-dialog-backdrop" data-invite-modal aria-hidden="true">
-    <div class="c-form-dialog" role="dialog" aria-modal="true" aria-labelledby="invite-dialog-title">
-      <button class="c-auth-close" type="button" data-close-invite aria-label="Fechar formulário">×</button>
-      <p class="c-kicker">NOVO CONVITE</p>
-      <h2 id="invite-dialog-title">Encontrar alguém para jogar</h2>
-      <p>Preencha os dados da partida. O convite ficará visível para outros usuários autenticados.</p>
-      <form class="c-invite-form" data-invite-form novalidate>
-        <label>Nickname<input name="nickname" type="text" minlength="2" maxlength="40" autocomplete="nickname" required placeholder="Seu nome no jogo"></label>
-        <div class="c-form-row">
-          <label>Plataforma<select name="platform" required><option value="">Selecione</option><option>PS5</option><option>PS4</option><option>Xbox</option><option>PC</option><option>Mobile</option><option>Outro</option></select></label>
-          <label>Modo de jogo<select name="game_mode" required><option value="">Selecione</option><option>Amistoso</option><option>Coop 2v2</option><option>Ranqueada</option><option>Treino</option><option>Outro</option></select></label>
-        </div>
-        <label>Horário disponível<input name="available_at" type="datetime-local" required></label>
-        <label>Observação <span>(opcional)</span><textarea name="note" rows="3" maxlength="240" placeholder="Ex.: quero jogar duas partidas, sem call..."></textarea></label>
-        <div class="c-form-message" data-invite-form-message aria-live="polite"></div>
-        <div class="c-form-actions"><button type="button" class="c-secondary-action" data-close-invite>Cancelar</button><button type="submit" class="c-tour-btn" data-invite-submit>Publicar convite</button></div>
-      </form>
-    </div>
-  </div>
-
-  <div class="c-toast" data-community-toast aria-live="polite"></div>
-
-  <footer class="site-footer">
-    <div class="shell footer-grid">
-      <a class="brand brand-footer" href="index.html" aria-label="Ítalo Football — início"><span class="brand-main">ÍTALO</span><span class="brand-sub">FOOTBALL</span></a>
-      <p class="footer-motto">EVOLUIR SEMPRE</p>
-      <div class="socials" aria-label="Redes sociais"><a href="https://www.youtube.com/channel/UCaThC5oHN4mG59Ya8WGQLmQ" target="_blank" rel="noopener noreferrer" aria-label="YouTube">▶</a><a href="https://www.tiktok.com/@italoefootbal" target="_blank" rel="noopener noreferrer" aria-label="TikTok">♪</a><a href="https://www.instagram.com/italoefootball/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">◎</a></div>
-      <p class="credit">Desenvolvido por <a href="https://infotech-io.com.br" target="_blank" rel="noopener noreferrer"><strong>InfoTech.io</strong></a></p>
-      <p class="footer-tagline">AQUI O FUTEBOL VIRTUAL É SÉRIO • <span id="year"></span></p>
-    </div>
-  </footer>
-</body>
-</html>
+<section class="community-card" aria-labelledby="topics-title"><header class="community-card-head"><div><h2 id="topics-title">Tópicos e partidas</h2><p>Crie uma sala rápida ou entre em uma conversa específica.</p></div><button class="social-btn secondary" type="button" data-create-topic>Criar tópico</button></header><div class="community-card-body"><div class="topic-list" data-topic-list><div class="community-state">Entre na sua conta para acessar os tópicos.</div></div></div></section>
+</div>
+<aside class="community-side">
+<section class="community-card"><header class="community-card-head"><div><h3>Convide para jogar</h3><p>Encontre alguém no seu horário.</p></div></header><div class="community-card-body"><form class="invite-form" data-invite-form><label>Nickname<input name="nickname" minlength="2" maxlength="40" required placeholder="Seu nome no jogo"></label><div class="invite-form-grid"><label>Plataforma<select name="platform" required><option>Mobile</option><option>PS5</option><option>PS4</option><option>Xbox</option><option>PC</option><option>Outro</option></select></label><label>Modo<select name="game_mode" required><option>Amistoso</option><option>Coop 2v2</option><option>Ranqueada</option><option>Treino</option><option>Outro</option></select></label></div><label>Horário<input name="available_at" type="datetime-local" required></label><label>Observação<textarea name="note" maxlength="240" rows="2" placeholder="Opcional"></textarea></label><button class="social-btn primary" type="submit">Publicar convite</button></form><div class="invite-list" data-invite-list style="margin-top:14px"></div></div></section>
+<section class="community-card"><header class="community-card-head"><div><h3>Ranking</h3><p>Pontuação da comunidade.</p></div><a class="social-btn secondary" href="perfil.html">Meu perfil</a></header><div class="community-card-body"><div class="ranking-list" data-ranking-list><div class="community-skeleton"></div></div></div></section>
+<section class="community-card"><header class="community-card-head"><div><h3>Mais da comunidade</h3><p>Acesse as áreas principais.</p></div></header><div class="community-card-body community-links"><a href="torneios.html"><span>🏆 Torneios</span><b>›</b></a><a href="perfil.html"><span>👥 Amigos e perfil</span><b>›</b></a><a href="videos.html"><span>▶ Vídeos</span><b>›</b></a><a href="curso.html"><span>🎓 Cursos</span><b>›</b></a></div></section>
+</aside></section></main>
+<div class="social-toast" data-social-toast aria-live="polite"></div>
+<footer class="site-footer"><div class="shell footer-grid"><a class="brand brand-footer" href="index.html"><span class="brand-main">ÍTALO</span><span class="brand-sub">FOOTBALL</span></a><p class="footer-motto">EVOLUIR SEMPRE</p><div class="socials"><a href="https://www.youtube.com/channel/UCaThC5oHN4mG59Ya8WGQLmQ" target="_blank" rel="noopener noreferrer" aria-label="YouTube">▶</a><a href="https://www.tiktok.com/@italoefootbal" target="_blank" rel="noopener noreferrer" aria-label="TikTok">♪</a><a href="https://www.instagram.com/italoefootball/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">◎</a></div><p class="credit">Desenvolvido por <a href="https://infotech-io.com.br" target="_blank" rel="noopener noreferrer"><strong>InfoTech.io</strong></a></p><p class="footer-tagline">AQUI O FUTEBOL VIRTUAL É SÉRIO • <span id="year"></span></p></div></footer>
+</body></html>
