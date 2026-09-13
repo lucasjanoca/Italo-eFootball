@@ -1,0 +1,9 @@
+/* Home: hero sticky no desktop/notebook sem cobrir header ou conteúdo. */
+body.home-redesign .site-header{z-index:500}
+body.home-redesign .r-home{overflow:visible!important;overflow-x:clip!important}
+body.home-redesign .r-hero{position:sticky;top:72px;z-index:0;height:calc(100svh - 72px);min-height:620px;max-height:780px;overflow:clip;contain:paint}
+body.home-redesign .r-home-section{position:relative;z-index:2;isolation:isolate}
+body.home-redesign .site-footer{position:relative;z-index:3}
+body.home-redesign .notification-panel{z-index:900}
+@media(max-height:760px) and (min-width:761px){body.home-redesign .r-hero{min-height:calc(100svh - 72px);max-height:none;padding-top:36px;padding-bottom:32px}body.home-redesign .r-brand-title{font-size:clamp(46px,7vw,72px);margin-bottom:15px}body.home-redesign .r-hero h2{font-size:clamp(26px,3.6vw,40px);margin-bottom:18px}body.home-redesign .r-action-stack{gap:8px}body.home-redesign .r-action{min-height:66px;border-radius:17px}body.home-redesign .r-action-icon{width:46px;height:46px;font-size:21px}body.home-redesign .r-action-label{font-size:17px}}
+@media(max-width:760px){body.home-redesign .r-home{overflow:hidden!important}body.home-redesign .r-hero{position:relative;top:auto;height:auto;min-height:0;max-height:none;z-index:0;overflow:hidden;contain:none}body.home-redesign .r-home-section{z-index:1}}
