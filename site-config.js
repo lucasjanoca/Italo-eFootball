@@ -1,6 +1,6 @@
 window.ITALO_SITE_CONFIG=Object.freeze({
   auditVersion:"2026-09-12-profile-carousel-moderation",
-  assetVersion:"20260912-final7",
+  assetVersion:"20260912-final8",
   lockVideoSelection:true,
   lockViewCounts:true,
   videoSlots:8,
@@ -25,6 +25,7 @@ window.ITALO_SITE_CONFIG=Object.freeze({
   addStylesheet('carousel-enhancements.css','data-carousel-enhancements');
   addStylesheet('launch.css','data-launch-css');
   if(document.body?.classList.contains('home-redesign'))addStylesheet('home-sticky.css','data-home-sticky');
+  if(document.body?.classList.contains('community-v2')){addStylesheet('ranking-polish.css','data-ranking-polish');addScript('ranking-polish.js','data-ranking-polish-js');}
   const profilePage=/\/perfil\.html(?:$|[?#])/i.test(location.pathname+location.search+location.hash)||!!document.querySelector('script[src^="profile-app.js"]');
   if(!profilePage&&document.querySelector('[data-social-actions],[data-social-auth],[data-admin-app]'))addScript('launch-social.js','data-launch-social');
   if(/\/grupos\.html(?:$|[?#])/i.test(location.pathname+location.search+location.hash)){location.replace('comunidade.html');return;}
