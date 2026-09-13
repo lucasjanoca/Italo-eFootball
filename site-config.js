@@ -1,6 +1,6 @@
 window.ITALO_SITE_CONFIG=Object.freeze({
-  auditVersion:"2026-09-12-final-launch",
-  assetVersion:"20260912-final6",
+  auditVersion:"2026-09-12-profile-carousel-moderation",
+  assetVersion:"20260912-final7",
   lockVideoSelection:true,
   lockViewCounts:true,
   videoSlots:8,
@@ -17,14 +17,16 @@ window.ITALO_SITE_CONFIG=Object.freeze({
     const css=document.createElement('link');css.rel='stylesheet';css.href=`${href}?v=${encodeURIComponent(version)}`;css.setAttribute(marker,'true');document.head.appendChild(css);
   };
   const addScript=(src,marker)=>{
-    if(document.querySelector(`script[${marker}]`))return;
+    if(document.querySelector(`script[${marker}]`)||document.querySelector(`script[src^="${src}"]`))return;
     const js=document.createElement('script');js.src=`${src}?v=${encodeURIComponent(version)}`;js.defer=true;js.setAttribute(marker,'true');document.head.appendChild(js);
   };
   addStylesheet('generated-assets.css','data-generated-assets');
   addStylesheet('production-fixes.css','data-production-fixes');
   addStylesheet('carousel-enhancements.css','data-carousel-enhancements');
   addStylesheet('launch.css','data-launch-css');
-  if(document.querySelector('[data-social-actions],[data-social-auth],[data-profile-app],[data-admin-app]'))addScript('launch-social.js','data-launch-social');
+  if(document.body?.classList.contains('home-redesign'))addStylesheet('home-sticky.css','data-home-sticky');
+  const profilePage=/\/perfil\.html(?:$|[?#])/i.test(location.pathname+location.search+location.hash)||!!document.querySelector('script[src^="profile-app.js"]');
+  if(!profilePage&&document.querySelector('[data-social-actions],[data-social-auth],[data-admin-app]'))addScript('launch-social.js','data-launch-social');
   if(/\/grupos\.html(?:$|[?#])/i.test(location.pathname+location.search+location.hash)){location.replace('comunidade.html');return;}
 
   const normalize=()=>{
