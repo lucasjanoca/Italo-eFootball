@@ -47,3 +47,11 @@
   .r-course-reference .r-mini-benefit strong{font-size:8.5px}
   .r-course-reference .r-mini-benefit span{font-size:7px}
 }
+
+/* Nova arte premium do curso: mantém o layout atual e troca apenas a imagem. */
+.r-course-reference .r-course-media{
+  background:#050609 url("assets/generated/curso-domine-o-jogo-premium.svg") center center/cover no-repeat;
+}
+.r-course-reference .r-course-media img{
+  opacity:0;
+}
