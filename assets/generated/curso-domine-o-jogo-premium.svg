@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" role="img" aria-labelledby="title desc">
+<title id="title">Curso Domine o Jogo</title>
+<desc id="desc">Arte premium em preto e vermelho para o curso de eFootball do Ítalo.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#050609"/><stop offset=".48" stop-color="#0b0d12"/><stop offset="1" stop-color="#030305"/></linearGradient>
+  <radialGradient id="redGlow" cx="50%" cy="36%" r="65%"><stop stop-color="#ff1738" stop-opacity=".38"/><stop offset=".52" stop-color="#b4001d" stop-opacity=".14"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".48" stop-color="#d7d9df"/><stop offset="1" stop-color="#8f949d"/></linearGradient>
+  <linearGradient id="red" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff3651"/><stop offset=".55" stop-color="#f2082c"/><stop offset="1" stop-color="#9d0018"/></linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="12" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="28"/></filter>
+  <pattern id="grid" width="54" height="54" patternUnits="userSpaceOnUse"><path d="M54 0H0V54" fill="none" stroke="#fff" stroke-opacity=".028"/></pattern>
+</defs>
+<rect width="1200" height="860" fill="url(#bg)"/>
+<rect width="1200" height="860" fill="url(#redGlow)"/>
+<rect width="1200" height="860" fill="url(#grid)"/>
+<ellipse cx="600" cy="390" rx="470" ry="260" fill="#ff092f" opacity=".16" filter="url(#soft)"/>
+<g opacity=".34" stroke="#ff2343" fill="none">
+  <path d="M-40 660 380 230 620 410 940 90 1260 450" stroke-width="3"/>
+  <path d="M-70 714 380 252 620 432 950 114 1270 474" stroke-width="1"/>
+</g>
+<g transform="translate(62 56)">
+  <rect width="376" height="58" rx="29" fill="#0d1015" stroke="#ff2945" stroke-width="2"/>
+  <circle cx="31" cy="29" r="7" fill="#ff2342" filter="url(#glow)"/>
+  <text x="54" y="37" fill="#f7f7f8" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="800" letter-spacing="3">TREINAMENTO DISPONÍVEL</text>
+</g>
+<g opacity=".9">
+  <text x="80" y="180" fill="#ff3851" font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="800" letter-spacing="7">CURSO INTENSIVO</text>
+  <text x="80" y="265" fill="url(#metal)" font-family="Arial Black,Arial,Helvetica,sans-serif" font-size="94" font-weight="900" font-style="italic" letter-spacing="-6">DOMINE</text>
+  <text x="80" y="355" fill="url(#red)" font-family="Arial Black,Arial,Helvetica,sans-serif" font-size="100" font-weight="900" font-style="italic" letter-spacing="-7">O JOGO.</text>
+  <text x="85" y="405" fill="#f3f4f6" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="800" letter-spacing="7">SEJA A DIFERENÇA.</text>
+</g>
+<g transform="translate(735 158)">
+  <circle cx="190" cy="190" r="158" fill="#06070a" stroke="#ff2443" stroke-width="8" filter="url(#glow)"/>
+  <circle cx="190" cy="190" r="130" fill="#11141a" stroke="#474b55" stroke-width="5"/>
+  <path d="M190 62 274 104 301 192 259 278 171 313 86 264 76 169 117 90Z" fill="#090b0f" stroke="#c9ccd2" stroke-width="8"/>
+  <path d="M190 62 221 122 190 160 159 122Z" fill="#ff1738"/>
+  <path d="M117 90 159 122 143 184 76 169" fill="none" stroke="#c9ccd2" stroke-width="7"/>
+  <path d="M221 122 274 104 301 192 236 182Z" fill="none" stroke="#c9ccd2" stroke-width="7"/>
+  <path d="M143 184 190 160 236 182 232 238 173 251 132 222Z" fill="none" stroke="#c9ccd2" stroke-width="7"/>
+  <path d="M173 251 171 313M232 238 259 278M132 222 86 264" stroke="#c9ccd2" stroke-width="7"/>
+</g>
+<g transform="translate(98 500) rotate(-7 170 90)">
+  <path d="M45 57c22-39 68-57 112-45l31 9c22 6 43 6 65 0l31-9c44-12 90 6 112 45 18 32 26 92 7 124-14 23-42 20-56 0l-35-51H129l-35 51c-14 20-42 23-56 0-19-32-11-92 7-124Z" fill="#090b0f" stroke="#ff2848" stroke-width="5" filter="url(#glow)"/>
+  <circle cx="122" cy="88" r="18" fill="#161920" stroke="#aeb3bd" stroke-width="4"/>
+  <path d="M122 62v52M96 88h52" stroke="#d9dce2" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="315" cy="72" r="10" fill="#ff2848"/><circle cx="339" cy="96" r="10" fill="#d9dce2"/><circle cx="291" cy="96" r="10" fill="#d9dce2"/><circle cx="315" cy="120" r="10" fill="#ff2848"/>
+  <circle cx="192" cy="128" r="21" fill="#171a20" stroke="#5f646e" stroke-width="4"/><circle cx="247" cy="128" r="21" fill="#171a20" stroke="#5f646e" stroke-width="4"/>
+</g>
+<g transform="translate(710 520)">
+  <rect width="385" height="238" rx="24" fill="#090b0f" stroke="#ff2645" stroke-width="4" opacity=".95"/>
+  <rect x="22" y="22" width="341" height="194" rx="12" fill="#050609" stroke="#d9dce2" stroke-opacity=".55" stroke-width="2"/>
+  <path d="M192 23v192M22 119h341" stroke="#d9dce2" stroke-opacity=".35" stroke-width="2"/>
+  <circle cx="192" cy="119" r="35" fill="none" stroke="#d9dce2" stroke-opacity=".35" stroke-width="2"/>
+  <g stroke="#ff2947" stroke-width="8" stroke-linecap="round"><path d="M74 72l20 20m0-20-20 20M266 153l20 20m0-20-20 20M128 154l18 18m0-18-18 18"/></g>
+  <g fill="none" stroke="#f3f4f6" stroke-width="6"><circle cx="130" cy="83" r="12"/><circle cx="231" cy="80" r="12"/><circle cx="315" cy="126" r="12"/></g>
+  <path d="M120 126c54-15 102-11 150 17" fill="none" stroke="#ff2947" stroke-width="5" stroke-linecap="round"/>
+  <path d="m257 128 22 18-28 7" fill="none" stroke="#ff2947" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g>
+  <rect x="74" y="770" width="1052" height="1" fill="#ff2a47" opacity=".5"/>
+  <text x="80" y="815" fill="#b7bbc3" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700" letter-spacing="5">TÁTICA  •  GAMEPLAY  •  EVOLUÇÃO  •  RESULTADOS</text>
+  <rect x="955" y="797" width="160" height="4" rx="2" fill="#ff1738" filter="url(#glow)"/>
+</g>
+</svg>
