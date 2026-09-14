@@ -1,6 +1,6 @@
 window.ITALO_SITE_CONFIG=Object.freeze({
-  auditVersion:"2026-09-12-profile-carousel-moderation",
-  assetVersion:"20260912-final9",
+  auditVersion:"2026-09-14-ui-topics-admin",
+  assetVersion:"20260914-ui-topics-admin1",
   lockVideoSelection:true,
   lockViewCounts:true,
   videoSlots:8,
@@ -24,6 +24,8 @@ window.ITALO_SITE_CONFIG=Object.freeze({
   addStylesheet('production-fixes.css','data-production-fixes');
   addStylesheet('carousel-enhancements.css','data-carousel-enhancements');
   addStylesheet('launch.css','data-launch-css');
+  addStylesheet('ui-fixes.css','data-ui-fixes');
+  addScript('site-hotfix.js','data-site-hotfix');
   if(document.body?.classList.contains('home-redesign'))addStylesheet('home-sticky.css','data-home-sticky');
   if(document.body?.classList.contains('community-v2')){addStylesheet('ranking-polish.css','data-ranking-polish');addScript('ranking-polish.js','data-ranking-polish-js');}
   const profilePage=/\/perfil\.html(?:$|[?#])/i.test(location.pathname+location.search+location.hash)||!!document.querySelector('script[src^="profile-app.js"]');
