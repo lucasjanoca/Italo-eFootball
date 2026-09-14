@@ -1,0 +1,49 @@
+/* Ajustes finais de interface — 14/09/2026 */
+
+/* A conta proprietária mantém as permissões de owner internamente,
+   mas a insígnia pública usa o visual de ADM solicitado. */
+.role-badge.admin,
+.role-badge.owner{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:22px!important;
+  padding:5px 9px!important;
+  border-radius:999px!important;
+  color:#dbeafe!important;
+  background:linear-gradient(135deg,rgba(37,99,235,.28),rgba(14,165,233,.16))!important;
+  border:1px solid rgba(96,165,250,.72)!important;
+  box-shadow:0 0 16px rgba(59,130,246,.22)!important;
+  font-size:9px!important;
+  line-height:1!important;
+  font-weight:1000!important;
+  letter-spacing:.08em!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+
+/* Remove o espaço vazio do card da comunidade na Home em celulares.
+   A arte lateral continua no desktop, onde existe espaço para ela. */
+body.home-redesign .launch-community-promo{
+  min-height:0!important;
+  height:auto!important;
+  align-items:start!important;
+}
+body.home-redesign .launch-community-image{
+  margin:0!important;
+}
+
+@media(max-width:860px){
+  body.home-redesign .launch-community-promo{
+    grid-template-columns:1fr!important;
+  }
+  body.home-redesign .launch-community-image{
+    display:none!important;
+    min-height:0!important;
+    height:0!important;
+    overflow:hidden!important;
+  }
+  body.home-redesign .r-community-copy{
+    padding:28px 22px!important;
+  }
+}
